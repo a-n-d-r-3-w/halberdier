@@ -10,7 +10,6 @@ const url = require('url')
 
 const fs = require('fs');
 const crypto = require('crypto');
-require('./sjcl.js');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
