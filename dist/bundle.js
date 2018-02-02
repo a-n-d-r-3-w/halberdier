@@ -18202,6 +18202,11 @@ var AppBarebones = function (_React$Component) {
           'button',
           { onClick: this.saveChanges },
           'Save changes'
+        ),
+        _react2.default.createElement(
+          'button',
+          { onClick: this.addRow },
+          'Add row'
         )
       );
     }

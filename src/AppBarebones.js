@@ -64,6 +64,7 @@ class AppBarebones extends React.Component {
         </tbody></table>
         <button onClick={this.reloadFromFile}>Reload from file</button><br />
         <button onClick={this.saveChanges}>Save changes</button>
+        <button onClick={this.addRow}>Add row</button>
       </div>
     );
   }
