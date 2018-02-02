@@ -5,23 +5,20 @@ class AppBarebones extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      passwords: [
-        {
-          service: 'sadf',
-          username: '',
-          password: 'hi',
-        }
-      ]
+      passwords: []
     };
     this.onChange = this.onChange.bind(this);
     this.reloadFromFile = this.reloadFromFile.bind(this);
     this.saveChanges = this.saveChanges.bind(this);
+    this.addRow = this.addRow.bind(this);
+    this.deleteRow = this.deleteRow.bind(this);
   }
 
   componentWillMount() {
     ipcRenderer.on('passwords', (event, state) => {
       this.setState(state);
     });
+    ipcRenderer.send('get-passwords');
   }
 
   onChange(index, fieldName) {
@@ -45,6 +42,30 @@ class AppBarebones extends React.Component {
     ipcRenderer.send('save-changes', this.state);
   }
 
+  addRow() {
+    this.setState((prevState) => {
+      return {
+        passwords: [...prevState.passwords, {
+          service: '',
+          username: '',
+          password: '',
+        }],
+      };
+    })
+  }
+
+  deleteRow(index) {
+    return () => {
+      this.setState((prevState) => {
+        const temp = prevState.passwords;
+        temp.splice(index, 1)
+        return {
+          passwords: temp,
+        };
+      })
+    }
+  }
+
   render() {
     const rows = this.state.passwords.map((password, index) => {
       return (
@@ -52,6 +73,7 @@ class AppBarebones extends React.Component {
           <td><input value={password.service} onChange={this.onChange(index, 'service')}></input></td>
           <td><input value={password.username} onChange={this.onChange(index, 'username')}></input></td>
           <td><input value={password.password} onChange={this.onChange(index, 'password')}></input></td>
+          <td><button onClick={this.deleteRow(index)}>Delete row</button></td>
         </tr>
       );
     })
@@ -62,7 +84,7 @@ class AppBarebones extends React.Component {
         <table><tbody>
           {rows}
         </tbody></table>
-        <button onClick={this.reloadFromFile}>Reload from file</button><br />
+        <button onClick={this.reloadFromFile}>Reload from file</button>
         <button onClick={this.saveChanges}>Save changes</button>
         <button onClick={this.addRow}>Add row</button>
       </div>

@@ -18086,6 +18086,8 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -18104,15 +18106,13 @@ var AppBarebones = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (AppBarebones.__proto__ || Object.getPrototypeOf(AppBarebones)).call(this, props));
 
     _this.state = {
-      passwords: [{
-        service: 'sadf',
-        username: '',
-        password: 'hi'
-      }]
+      passwords: []
     };
     _this.onChange = _this.onChange.bind(_this);
     _this.reloadFromFile = _this.reloadFromFile.bind(_this);
     _this.saveChanges = _this.saveChanges.bind(_this);
+    _this.addRow = _this.addRow.bind(_this);
+    _this.deleteRow = _this.deleteRow.bind(_this);
     return _this;
   }
 
@@ -18124,6 +18124,7 @@ var AppBarebones = function (_React$Component) {
       ipcRenderer.on('passwords', function (event, state) {
         _this2.setState(state);
       });
+      ipcRenderer.send('get-passwords');
     }
   }, {
     key: 'onChange',
@@ -18152,9 +18153,37 @@ var AppBarebones = function (_React$Component) {
       ipcRenderer.send('save-changes', this.state);
     }
   }, {
+    key: 'addRow',
+    value: function addRow() {
+      this.setState(function (prevState) {
+        return {
+          passwords: [].concat(_toConsumableArray(prevState.passwords), [{
+            service: '',
+            username: '',
+            password: ''
+          }])
+        };
+      });
+    }
+  }, {
+    key: 'deleteRow',
+    value: function deleteRow(index) {
+      var _this4 = this;
+
+      return function () {
+        _this4.setState(function (prevState) {
+          var temp = prevState.passwords;
+          temp.splice(index, 1);
+          return {
+            passwords: temp
+          };
+        });
+      };
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       var rows = this.state.passwords.map(function (password, index) {
         return _react2.default.createElement(
@@ -18163,17 +18192,26 @@ var AppBarebones = function (_React$Component) {
           _react2.default.createElement(
             'td',
             null,
-            _react2.default.createElement('input', { value: password.service, onChange: _this4.onChange(index, 'service') })
+            _react2.default.createElement('input', { value: password.service, onChange: _this5.onChange(index, 'service') })
           ),
           _react2.default.createElement(
             'td',
             null,
-            _react2.default.createElement('input', { value: password.username, onChange: _this4.onChange(index, 'username') })
+            _react2.default.createElement('input', { value: password.username, onChange: _this5.onChange(index, 'username') })
           ),
           _react2.default.createElement(
             'td',
             null,
-            _react2.default.createElement('input', { value: password.password, onChange: _this4.onChange(index, 'password') })
+            _react2.default.createElement('input', { value: password.password, onChange: _this5.onChange(index, 'password') })
+          ),
+          _react2.default.createElement(
+            'td',
+            null,
+            _react2.default.createElement(
+              'button',
+              { onClick: _this5.deleteRow(index) },
+              'Delete row'
+            )
           )
         );
       });
@@ -18197,7 +18235,6 @@ var AppBarebones = function (_React$Component) {
           { onClick: this.reloadFromFile },
           'Reload from file'
         ),
-        _react2.default.createElement('br', null),
         _react2.default.createElement(
           'button',
           { onClick: this.saveChanges },
