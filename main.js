@@ -1,4 +1,5 @@
 const electron = require('electron')
+const {ipcMain} = require('electron')
 // Module to control application life.
 const app = electron.app
 // Module to create native browser window.
@@ -7,9 +8,27 @@ const BrowserWindow = electron.BrowserWindow
 const path = require('path')
 const url = require('url')
 
+const fs = require('fs');
+const crypto = require('crypto');
+require('./sjcl.js');
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
+
+function encrypt(string) {
+  const cipher = crypto.createCipher('aes192', 'a password');
+  let encrypted = cipher.update(string, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  return encrypted;
+}
+
+function decrypt(string) {
+  const decipher = crypto.createDecipher('aes192', 'a password');
+  let decrypted = decipher.update(string, 'hex', 'utf8');
+  decrypted += decipher.final('utf8');
+  return decrypted;
+}
 
 function createWindow () {
   // Create the browser window.
@@ -23,7 +42,19 @@ function createWindow () {
   }))
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
+
+  ipcMain.on('get-passwords', (event, arg) => {
+    const fromFile = fs.readFileSync(path.join(__dirname, "passwords.json"), 'utf8');
+    const decrypted = decrypt(fromFile);
+    event.sender.send('passwords', JSON.parse(decrypted))
+  });
+
+  ipcMain.on('save-changes', (event, state) => {
+    const string = JSON.stringify(state);
+    const encrypted = encrypt(string);
+    fs.writeFileSync(path.join(__dirname, "passwords.json"), encrypted);
+  });
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
