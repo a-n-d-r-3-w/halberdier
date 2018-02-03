@@ -9,6 +9,7 @@ import RestoreIcon from 'material-ui-icons/Restore';
 import AddIcon from 'material-ui-icons/Add';
 import InputIcon from 'material-ui-icons/Input';
 import TextField from 'material-ui/TextField';
+import Grid from 'material-ui/Grid';
 
 import { withStyles } from 'material-ui/styles';
 
@@ -136,23 +137,27 @@ class AppBarebones extends React.Component {
       <div>
         <Reboot />
         <Paper className={classes.root}>
-          <form onSubmit={this.reloadFromFile}>
-            <TextField
-              className={classes.textField}
-              type="password"
-              placeholder="Enter password"
-              onChange={this.onMasterPasswordInputChange}
-              value={this.state.masterPassword}
-            />
-            <Button raised type="submit" className={classes.button}><InputIcon className={classes.leftIcon} />Load from file</Button>
-            {this.state.isError ? <span>Error</span> : null}
-          </form>
-          <table><tbody>
-            {rows}
-          </tbody></table>
-          <Button raised onClick={this.reloadFromFile} className={classes.button}><RestoreIcon className={classes.leftIcon} />Reload from file</Button>
-          <Button raised onClick={this.saveChanges} className={classes.button}><SaveIcon className={classes.leftIcon} />Save</Button>
-          <Button raised onClick={this.addRow} className={classes.button}><AddIcon className={classes.leftIcon} />Add row</Button>
+          <Grid direction="column" container alignItems="center">
+            <form onSubmit={this.reloadFromFile}>
+              <TextField
+                className={classes.textField}
+                type="password"
+                placeholder="Enter password"
+                onChange={this.onMasterPasswordInputChange}
+                value={this.state.masterPassword}
+              />
+              <Button raised type="submit" className={classes.button}><InputIcon className={classes.leftIcon} />Load from file</Button>
+              {this.state.isError ? <span>Error</span> : null}
+            </form>
+            <table><tbody>
+              {rows}
+            </tbody></table>
+            <div>
+              <Button raised onClick={this.reloadFromFile} className={classes.button}><RestoreIcon className={classes.leftIcon} />Reload from file</Button>
+              <Button raised onClick={this.saveChanges} className={classes.button}><SaveIcon className={classes.leftIcon} />Save</Button>
+              <Button raised onClick={this.addRow} className={classes.button}><AddIcon className={classes.leftIcon} />Add row</Button>
+            </div>
+          </Grid>
         </Paper>
       </div>
     );
