@@ -18106,6 +18106,7 @@ var AppBarebones = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (AppBarebones.__proto__ || Object.getPrototypeOf(AppBarebones)).call(this, props));
 
     _this.state = {
+      masterPassword: '',
       passwords: []
     };
     _this.onChange = _this.onChange.bind(_this);
@@ -18113,6 +18114,7 @@ var AppBarebones = function (_React$Component) {
     _this.saveChanges = _this.saveChanges.bind(_this);
     _this.addRow = _this.addRow.bind(_this);
     _this.deleteRow = _this.deleteRow.bind(_this);
+    _this.onMasterPasswordInputChange = _this.onMasterPasswordInputChange.bind(_this);
     return _this;
   }
 
@@ -18125,6 +18127,13 @@ var AppBarebones = function (_React$Component) {
         _this2.setState(state);
       });
       ipcRenderer.send('get-passwords');
+    }
+  }, {
+    key: 'onMasterPasswordInputChange',
+    value: function onMasterPasswordInputChange(event) {
+      this.setState({
+        masterPassword: event.target.value
+      });
     }
   }, {
     key: 'onChange',
@@ -18144,8 +18153,12 @@ var AppBarebones = function (_React$Component) {
     }
   }, {
     key: 'reloadFromFile',
-    value: function reloadFromFile() {
-      ipcRenderer.send('get-passwords');
+    value: function reloadFromFile(event) {
+      event.preventDefault();
+      ipcRenderer.send('get-passwords', this.state.masterPassword);
+      this.setState({
+        masterPassword: ''
+      });
     }
   }, {
     key: 'saveChanges',
@@ -18221,6 +18234,21 @@ var AppBarebones = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
+        _react2.default.createElement(
+          'form',
+          { onSubmit: this.reloadFromFile },
+          _react2.default.createElement('input', {
+            type: 'password',
+            placeholder: 'Enter password',
+            onChange: this.onMasterPasswordInputChange,
+            value: this.state.masterPassword
+          }),
+          _react2.default.createElement(
+            'button',
+            { type: 'submit' },
+            'Load from file'
+          )
+        ),
         _react2.default.createElement(
           'table',
           null,

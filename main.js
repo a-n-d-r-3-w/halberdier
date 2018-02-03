@@ -11,6 +11,8 @@ const url = require('url')
 const fs = require('fs');
 const crypto = require('crypto');
 
+const {dialog} = require('electron')
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -22,11 +24,15 @@ function encrypt(string) {
   return encrypted;
 }
 
-function decrypt(string) {
-  const decipher = crypto.createDecipher('aes192', 'a password');
-  let decrypted = decipher.update(string, 'hex', 'utf8');
-  decrypted += decipher.final('utf8');
-  return decrypted;
+function decrypt(string, masterPassword) {
+  try {
+    const decipher = crypto.createDecipher('aes192', masterPassword);
+    let decrypted = decipher.update(string, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
+    return decrypted;
+  } catch (error) {
+    return '{ "error": true }';
+  }
 }
 
 function createWindow () {
@@ -43,9 +49,11 @@ function createWindow () {
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
 
-  ipcMain.on('get-passwords', (event, arg) => {
+  ipcMain.on('get-passwords', (event, masterPassword) => {
+    console.log(`masterPassword: ${masterPassword}`);
     const fromFile = fs.readFileSync(path.join(__dirname, "passwords.json"), 'utf8');
-    const decrypted = decrypt(fromFile);
+    // const decrypted = decrypt(fromFile);
+    const decrypted = decrypt(fromFile, masterPassword);
     event.sender.send('passwords', JSON.parse(decrypted))
   });
 

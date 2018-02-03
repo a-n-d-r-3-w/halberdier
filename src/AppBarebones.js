@@ -5,6 +5,7 @@ class AppBarebones extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      masterPassword: '',
       passwords: []
     };
     this.onChange = this.onChange.bind(this);
@@ -12,6 +13,7 @@ class AppBarebones extends React.Component {
     this.saveChanges = this.saveChanges.bind(this);
     this.addRow = this.addRow.bind(this);
     this.deleteRow = this.deleteRow.bind(this);
+    this.onMasterPasswordInputChange = this.onMasterPasswordInputChange.bind(this);
   }
 
   componentWillMount() {
@@ -19,6 +21,12 @@ class AppBarebones extends React.Component {
       this.setState(state);
     });
     ipcRenderer.send('get-passwords');
+  }
+
+  onMasterPasswordInputChange(event) {
+    this.setState({
+      masterPassword: event.target.value
+    });
   }
 
   onChange(index, fieldName) {
@@ -34,8 +42,12 @@ class AppBarebones extends React.Component {
     }
   }
 
-  reloadFromFile() {
-    ipcRenderer.send('get-passwords');
+  reloadFromFile(event) {
+    event.preventDefault();
+    ipcRenderer.send('get-passwords', this.state.masterPassword);
+    this.setState({
+      masterPassword: '',
+    });
   }
 
   saveChanges() {
@@ -81,6 +93,15 @@ class AppBarebones extends React.Component {
     const { classes } = this.props;
     return (
       <div>
+        <form onSubmit={this.reloadFromFile}>
+          <input
+            type="password"
+            placeholder="Enter password"
+            onChange={this.onMasterPasswordInputChange}
+            value={this.state.masterPassword}
+          />
+          <button type="submit">Load from file</button>
+        </form>
         <table><tbody>
           {rows}
         </tbody></table>
