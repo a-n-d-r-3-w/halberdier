@@ -9,6 +9,8 @@ import AddIcon from 'material-ui-icons/Add';
 import InputIcon from 'material-ui-icons/Input';
 import TextField from 'material-ui/TextField';
 import Grid from 'material-ui/Grid';
+import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
+import CopyIcon from 'material-ui-icons/ContentCopy';
 
 import { withStyles } from 'material-ui/styles';
 
@@ -129,8 +131,16 @@ class AppBarebones extends React.Component {
       return (
         <tr key={index}>
           <td><TextField className={classes.textField} value={password.service} onChange={this.onChange(index, 'service')} /></td>
-          <td><TextField className={classes.textField} value={password.username} onChange={this.onChange(index, 'username')} /></td>
-          <td><TextField className={classes.textField} value={password.password} onChange={this.onChange(index, 'password')} /></td>
+          <td><Input
+            endAdornment={<InputAdornment position="end"><CopyIcon /></InputAdornment>}
+            className={classes.textField}
+            value={password.username}
+            onChange={this.onChange(index, 'username')} /></td>
+          <td><Input
+            endAdornment={<InputAdornment position="end"><CopyIcon /></InputAdornment>}
+            className={classes.textField}
+            value={password.password}
+            onChange={this.onChange(index, 'password')} /></td>
           <td><IconButton onClick={this.deleteRow(index)}><DeleteIcon /></IconButton></td>
         </tr>
       );
