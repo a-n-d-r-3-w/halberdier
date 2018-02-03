@@ -128,7 +128,7 @@ class AppBarebones extends React.Component {
   copyField(index, fieldName) {
     return (event) => {
       clipboard.writeText(this.state.passwords[index][fieldName]);
-      alert(`Copied ${fieldName}.`);
+      new Notification('Passwords', { body: `Copied ${fieldName}.` })
     }
   }
 
