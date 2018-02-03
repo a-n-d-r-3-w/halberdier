@@ -18107,6 +18107,7 @@ var AppBarebones = function (_React$Component) {
 
     _this.state = {
       masterPassword: '',
+      isError: false,
       passwords: []
     };
     _this.onChange = _this.onChange.bind(_this);
@@ -18124,10 +18125,6 @@ var AppBarebones = function (_React$Component) {
       var _this2 = this;
 
       ipcRenderer.on('passwords', function (event, state) {
-        if (state.error) {
-          alert('Error');
-          return;
-        }
         _this2.setState(state);
       });
       ipcRenderer.send('get-passwords');
@@ -18251,7 +18248,12 @@ var AppBarebones = function (_React$Component) {
             'button',
             { type: 'submit' },
             'Load from file'
-          )
+          ),
+          this.state.isError ? _react2.default.createElement(
+            'div',
+            null,
+            'Error'
+          ) : null
         ),
         _react2.default.createElement(
           'table',

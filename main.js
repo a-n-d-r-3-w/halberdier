@@ -31,7 +31,7 @@ function decrypt(string, masterPassword) {
     decrypted += decipher.final('utf8');
     return decrypted;
   } catch (error) {
-    return '{ "error": true }';
+    return '{ "isError": true }';
   }
 }
 

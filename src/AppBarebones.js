@@ -6,6 +6,7 @@ class AppBarebones extends React.Component {
     super(props);
     this.state = {
       masterPassword: '',
+      isError: false,
       passwords: []
     };
     this.onChange = this.onChange.bind(this);
@@ -18,10 +19,6 @@ class AppBarebones extends React.Component {
 
   componentWillMount() {
     ipcRenderer.on('passwords', (event, state) => {
-      if (state.error) {
-        alert('Error');
-        return;
-      }
       this.setState(state);
     });
     ipcRenderer.send('get-passwords');
@@ -105,6 +102,7 @@ class AppBarebones extends React.Component {
             value={this.state.masterPassword}
           />
           <button type="submit">Load from file</button>
+          {this.state.isError ? <div>Error</div> : null}
         </form>
         <table><tbody>
           {rows}
