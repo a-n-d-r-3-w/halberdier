@@ -1,6 +1,7 @@
 import React from 'react';
 import Reboot from 'material-ui/Reboot';
 import Button from 'material-ui/Button';
+import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
 
 const {ipcRenderer} = require('electron');
@@ -92,7 +93,7 @@ class AppBarebones extends React.Component {
           <td><input value={password.service} onChange={this.onChange(index, 'service')}></input></td>
           <td><input value={password.username} onChange={this.onChange(index, 'username')}></input></td>
           <td><input value={password.password} onChange={this.onChange(index, 'password')}></input></td>
-          <td><Button fab mini onClick={this.deleteRow(index)}><DeleteIcon /></Button></td>
+          <td><IconButton onClick={this.deleteRow(index)}><DeleteIcon /></IconButton></td>
         </tr>
       );
     })
@@ -107,7 +108,7 @@ class AppBarebones extends React.Component {
             onChange={this.onMasterPasswordInputChange}
             value={this.state.masterPassword}
           />
-          <Button raised type="submit">Load from file</Button>
+          <Button type="submit">Load from file</Button>
           {this.state.isError ? <span>Error</span> : null}
         </form>
         <table><tbody>
