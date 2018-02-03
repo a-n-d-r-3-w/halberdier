@@ -93,7 +93,6 @@ class AppBarebones extends React.Component {
       );
     })
 
-    const { classes } = this.props;
     return (
       <div>
         <form onSubmit={this.reloadFromFile}>
