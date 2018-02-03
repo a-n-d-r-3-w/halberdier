@@ -130,6 +130,7 @@ class AppBarebones extends React.Component {
     const rows = this.state.passwords.map((password, index) => {
       return (
         <tr key={index}>
+          <td><IconButton onClick={this.deleteRow(index)}><DeleteIcon /></IconButton></td>
           <td><TextField className={classes.textField} value={password.service} onChange={this.onChange(index, 'service')} /></td>
           <td><Input
             endAdornment={<InputAdornment position="end"><CopyIcon /></InputAdornment>}
@@ -141,7 +142,6 @@ class AppBarebones extends React.Component {
             className={classes.textField}
             value={password.password}
             onChange={this.onChange(index, 'password')} /></td>
-          <td><IconButton onClick={this.deleteRow(index)}><DeleteIcon /></IconButton></td>
         </tr>
       );
     })
