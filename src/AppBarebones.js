@@ -148,9 +148,9 @@ class AppBarebones extends React.Component {
                 placeholder="Enter password"
                 onChange={this.onMasterPasswordInputChange}
                 value={this.state.masterPassword}
+                error={this.state.isError}
               />
               <Button raised type="submit" className={classes.button}><InputIcon className={classes.leftIcon} />Load from file</Button>
-              {this.state.isError ? <span>Error</span> : null}
             </form>
             <table className={classes.table}><tbody>
               {rows}
