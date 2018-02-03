@@ -4,6 +4,7 @@ import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
 import SaveIcon from 'material-ui-icons/Save';
+import RestoreIcon from 'material-ui-icons/Restore';
 import { withStyles } from 'material-ui/styles';
 
 const styles = theme => ({
@@ -130,7 +131,7 @@ class AppBarebones extends React.Component {
         <table><tbody>
           {rows}
         </tbody></table>
-        <Button raised onClick={this.reloadFromFile}>Reload from file</Button>
+        <Button raised onClick={this.reloadFromFile} className={classes.button}><RestoreIcon className={classes.leftIcon} />Reload from file</Button>
         <Button raised onClick={this.saveChanges} className={classes.button}><SaveIcon className={classes.leftIcon} />Save</Button>
         <Button raised onClick={this.addRow}>Add row</Button>
       </div>
