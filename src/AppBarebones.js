@@ -18,6 +18,10 @@ class AppBarebones extends React.Component {
 
   componentWillMount() {
     ipcRenderer.on('passwords', (event, state) => {
+      if (state.error) {
+        alert('Error');
+        return;
+      }
       this.setState(state);
     });
     ipcRenderer.send('get-passwords');

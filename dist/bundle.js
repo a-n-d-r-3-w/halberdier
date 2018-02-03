@@ -18124,6 +18124,10 @@ var AppBarebones = function (_React$Component) {
       var _this2 = this;
 
       ipcRenderer.on('passwords', function (event, state) {
+        if (state.error) {
+          alert('Error');
+          return;
+        }
         _this2.setState(state);
       });
       ipcRenderer.send('get-passwords');
