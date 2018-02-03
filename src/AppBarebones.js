@@ -133,12 +133,20 @@ class AppBarebones extends React.Component {
           <td><IconButton onClick={this.deleteRow(index)}><DeleteIcon /></IconButton></td>
           <td><TextField className={classes.textField} value={password.service} onChange={this.onChange(index, 'service')} /></td>
           <td><Input
-            endAdornment={<InputAdornment position="end"><CopyIcon /></InputAdornment>}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton><CopyIcon /></IconButton>
+              </InputAdornment>
+            }
             className={classes.textField}
             value={password.username}
             onChange={this.onChange(index, 'username')} /></td>
           <td><Input
-            endAdornment={<InputAdornment position="end"><CopyIcon /></InputAdornment>}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton><CopyIcon /></IconButton>
+              </InputAdornment>
+            }
             className={classes.textField}
             value={password.password}
             onChange={this.onChange(index, 'password')} /></td>
