@@ -52,7 +52,10 @@ class AppBarebones extends React.Component {
   }
 
   saveChanges() {
-    ipcRenderer.send('save-changes', this.state);
+    const toSave = {
+      passwords: this.state.passwords
+    };
+    ipcRenderer.send('save-changes', toSave);
   }
 
   addRow() {

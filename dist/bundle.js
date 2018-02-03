@@ -18164,7 +18164,10 @@ var AppBarebones = function (_React$Component) {
   }, {
     key: 'saveChanges',
     value: function saveChanges() {
-      ipcRenderer.send('save-changes', this.state);
+      var toSave = {
+        passwords: this.state.passwords
+      };
+      ipcRenderer.send('save-changes', toSave);
     }
   }, {
     key: 'addRow',
