@@ -124,6 +124,12 @@ class AppBarebones extends React.Component {
     }
   }
 
+  copyField(index, fieldName) {
+    return (event) => {
+      console.log(`Copied ${this.state.passwords[index][fieldName]}`);
+    }
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -134,7 +140,7 @@ class AppBarebones extends React.Component {
           <td><TextField className={classes.textField} value={password.service} onChange={this.onChange(index, 'service')} /></td>
           <td><Input
             endAdornment={
-              <InputAdornment position="end">
+              <InputAdornment position="end" onClick={this.copyField(index, 'username')}>
                 <IconButton><CopyIcon /></IconButton>
               </InputAdornment>
             }
@@ -143,7 +149,7 @@ class AppBarebones extends React.Component {
             onChange={this.onChange(index, 'username')} /></td>
           <td><Input
             endAdornment={
-              <InputAdornment position="end">
+              <InputAdornment position="end" onClick={this.copyField(index, 'password')}>
                 <IconButton><CopyIcon /></IconButton>
               </InputAdornment>
             }
