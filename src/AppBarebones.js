@@ -5,7 +5,6 @@ import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
 import SaveIcon from 'material-ui-icons/Save';
-import RestoreIcon from 'material-ui-icons/Restore';
 import AddIcon from 'material-ui-icons/Add';
 import InputIcon from 'material-ui-icons/Input';
 import TextField from 'material-ui/TextField';
@@ -15,11 +14,11 @@ import { withStyles } from 'material-ui/styles';
 
 const styles = theme => ({
   root: theme.mixins.gutters({
-    paddingTop: 16,
-    paddingBottom: 16,
     marginTop: theme.spacing.unit * 3,
     marginLeft: theme.spacing.unit * 3,
     marginRight: theme.spacing.unit * 3,
+    paddingTop: theme.spacing.unit * 6,
+    paddingBottom: theme.spacing.unit * 6,
   }),
   button: {
     margin: theme.spacing.unit,
@@ -35,6 +34,10 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
     width: 200,
   },
+  table: {
+    marginTop: theme.spacing.unit * 3,
+    marginBottom: theme.spacing.unit * 3
+  }
 });
 
 const {ipcRenderer} = require('electron');
@@ -149,12 +152,11 @@ class AppBarebones extends React.Component {
               <Button raised type="submit" className={classes.button}><InputIcon className={classes.leftIcon} />Load from file</Button>
               {this.state.isError ? <span>Error</span> : null}
             </form>
-            <table><tbody>
+            <table className={classes.table}><tbody>
               {rows}
             </tbody></table>
             <div>
-              <Button raised onClick={this.reloadFromFile} className={classes.button}><RestoreIcon className={classes.leftIcon} />Reload from file</Button>
-              <Button raised onClick={this.saveChanges} className={classes.button}><SaveIcon className={classes.leftIcon} />Save</Button>
+              <Button raised onClick={this.saveChanges} className={classes.button}><SaveIcon className={classes.leftIcon} />Save changes</Button>
               <Button raised onClick={this.addRow} className={classes.button}><AddIcon className={classes.leftIcon} />Add row</Button>
             </div>
           </Grid>
