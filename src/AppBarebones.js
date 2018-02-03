@@ -1,5 +1,6 @@
 import React from 'react';
 import Reboot from 'material-ui/Reboot';
+import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
@@ -8,9 +9,17 @@ import RestoreIcon from 'material-ui-icons/Restore';
 import AddIcon from 'material-ui-icons/Add';
 import InputIcon from 'material-ui-icons/Input';
 import TextField from 'material-ui/TextField';
+
 import { withStyles } from 'material-ui/styles';
 
 const styles = theme => ({
+  root: theme.mixins.gutters({
+    paddingTop: 16,
+    paddingBottom: 16,
+    marginTop: theme.spacing.unit * 3,
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
+  }),
   button: {
     margin: theme.spacing.unit,
   },
@@ -126,23 +135,25 @@ class AppBarebones extends React.Component {
     return (
       <div>
         <Reboot />
-        <form onSubmit={this.reloadFromFile}>
-          <TextField
-            className={classes.textField}
-            type="password"
-            placeholder="Enter password"
-            onChange={this.onMasterPasswordInputChange}
-            value={this.state.masterPassword}
-          />
-          <Button raised type="submit" className={classes.button}><InputIcon className={classes.leftIcon} />Load from file</Button>
-          {this.state.isError ? <span>Error</span> : null}
-        </form>
-        <table><tbody>
-          {rows}
-        </tbody></table>
-        <Button raised onClick={this.reloadFromFile} className={classes.button}><RestoreIcon className={classes.leftIcon} />Reload from file</Button>
-        <Button raised onClick={this.saveChanges} className={classes.button}><SaveIcon className={classes.leftIcon} />Save</Button>
-        <Button raised onClick={this.addRow} className={classes.button}><AddIcon className={classes.leftIcon} />Add row</Button>
+        <Paper className={classes.root}>
+          <form onSubmit={this.reloadFromFile}>
+            <TextField
+              className={classes.textField}
+              type="password"
+              placeholder="Enter password"
+              onChange={this.onMasterPasswordInputChange}
+              value={this.state.masterPassword}
+            />
+            <Button raised type="submit" className={classes.button}><InputIcon className={classes.leftIcon} />Load from file</Button>
+            {this.state.isError ? <span>Error</span> : null}
+          </form>
+          <table><tbody>
+            {rows}
+          </tbody></table>
+          <Button raised onClick={this.reloadFromFile} className={classes.button}><RestoreIcon className={classes.leftIcon} />Reload from file</Button>
+          <Button raised onClick={this.saveChanges} className={classes.button}><SaveIcon className={classes.leftIcon} />Save</Button>
+          <Button raised onClick={this.addRow} className={classes.button}><AddIcon className={classes.leftIcon} />Add row</Button>
+        </Paper>
       </div>
     );
   }
