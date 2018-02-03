@@ -5,6 +5,9 @@ import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
 import SaveIcon from 'material-ui-icons/Save';
 import RestoreIcon from 'material-ui-icons/Restore';
+import AddIcon from 'material-ui-icons/Add';
+import InputIcon from 'material-ui-icons/Input';
+import TextField from 'material-ui/TextField';
 import { withStyles } from 'material-ui/styles';
 
 const styles = theme => ({
@@ -16,6 +19,11 @@ const styles = theme => ({
   },
   rightIcon: {
     marginLeft: theme.spacing.unit,
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200,
   },
 });
 
@@ -119,13 +127,14 @@ class AppBarebones extends React.Component {
       <div>
         <Reboot />
         <form onSubmit={this.reloadFromFile}>
-          <input
+          <TextField
+            className={classes.textField}
             type="password"
             placeholder="Enter password"
             onChange={this.onMasterPasswordInputChange}
             value={this.state.masterPassword}
           />
-          <Button type="submit">Load from file</Button>
+          <Button raised type="submit" className={classes.button}><InputIcon className={classes.leftIcon} />Load from file</Button>
           {this.state.isError ? <span>Error</span> : null}
         </form>
         <table><tbody>
@@ -133,7 +142,7 @@ class AppBarebones extends React.Component {
         </tbody></table>
         <Button raised onClick={this.reloadFromFile} className={classes.button}><RestoreIcon className={classes.leftIcon} />Reload from file</Button>
         <Button raised onClick={this.saveChanges} className={classes.button}><SaveIcon className={classes.leftIcon} />Save</Button>
-        <Button raised onClick={this.addRow}>Add row</Button>
+        <Button raised onClick={this.addRow} className={classes.button}><AddIcon className={classes.leftIcon} />Add row</Button>
       </div>
     );
   }
