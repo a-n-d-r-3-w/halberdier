@@ -3,6 +3,20 @@ import Reboot from 'material-ui/Reboot';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
+import SaveIcon from 'material-ui-icons/Save';
+import { withStyles } from 'material-ui/styles';
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+  leftIcon: {
+    marginRight: theme.spacing.unit,
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit,
+  },
+});
 
 const {ipcRenderer} = require('electron');
 
@@ -87,6 +101,8 @@ class AppBarebones extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
+
     const rows = this.state.passwords.map((password, index) => {
       return (
         <tr key={index}>
@@ -115,11 +131,11 @@ class AppBarebones extends React.Component {
           {rows}
         </tbody></table>
         <Button raised onClick={this.reloadFromFile}>Reload from file</Button>
-        <Button raised onClick={this.saveChanges}>Save changes</Button>
+        <Button raised onClick={this.saveChanges} className={classes.button}><SaveIcon className={classes.leftIcon} />Save</Button>
         <Button raised onClick={this.addRow}>Add row</Button>
       </div>
     );
   }
 }
 
-export default AppBarebones;
+export default withStyles(styles)(AppBarebones);
