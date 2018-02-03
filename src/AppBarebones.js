@@ -21,7 +21,6 @@ class AppBarebones extends React.Component {
     ipcRenderer.on('passwords', (event, state) => {
       this.setState(state);
     });
-    ipcRenderer.send('get-passwords');
   }
 
   onMasterPasswordInputChange(event) {

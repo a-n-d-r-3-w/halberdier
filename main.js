@@ -46,7 +46,6 @@ function createWindow () {
   mainWindow.webContents.openDevTools()
 
   ipcMain.on('get-passwords', (event, masterPassword) => {
-    console.log(`masterPassword: ${masterPassword}`);
     const fromFile = fs.readFileSync(path.join(__dirname, "passwords.json"), 'utf8');
     let decrypted;
     let json;
