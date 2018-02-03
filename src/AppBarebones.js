@@ -11,6 +11,7 @@ import TextField from 'material-ui/TextField';
 import Grid from 'material-ui/Grid';
 import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
 import CopyIcon from 'material-ui-icons/ContentCopy';
+import { clipboard } from 'electron'
 
 import { withStyles } from 'material-ui/styles';
 
@@ -126,7 +127,8 @@ class AppBarebones extends React.Component {
 
   copyField(index, fieldName) {
     return (event) => {
-      console.log(`Copied ${this.state.passwords[index][fieldName]}`);
+      clipboard.writeText(this.state.passwords[index][fieldName]);
+      alert(`Copied ${fieldName}.`);
     }
   }
 
