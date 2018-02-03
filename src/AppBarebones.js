@@ -1,4 +1,6 @@
 import React from 'react';
+import Reboot from 'material-ui/Reboot';
+
 const {ipcRenderer} = require('electron');
 
 class AppBarebones extends React.Component {
@@ -95,6 +97,7 @@ class AppBarebones extends React.Component {
 
     return (
       <div>
+        <Reboot />
         <form onSubmit={this.reloadFromFile}>
           <input
             type="password"
