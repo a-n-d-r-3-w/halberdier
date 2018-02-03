@@ -105,7 +105,7 @@ class AppBarebones extends React.Component {
             value={this.state.masterPassword}
           />
           <button type="submit">Load from file</button>
-          {this.state.isError ? <div>Error</div> : null}
+          {this.state.isError ? <span>Error</span> : null}
         </form>
         <table><tbody>
           {rows}
