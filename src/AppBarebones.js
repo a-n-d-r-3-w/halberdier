@@ -1,5 +1,6 @@
 import React from 'react';
 import Reboot from 'material-ui/Reboot';
+import Button from 'material-ui/Button';
 
 const {ipcRenderer} = require('electron');
 
@@ -90,7 +91,7 @@ class AppBarebones extends React.Component {
           <td><input value={password.service} onChange={this.onChange(index, 'service')}></input></td>
           <td><input value={password.username} onChange={this.onChange(index, 'username')}></input></td>
           <td><input value={password.password} onChange={this.onChange(index, 'password')}></input></td>
-          <td><button onClick={this.deleteRow(index)}>Delete row</button></td>
+          <td><Button onClick={this.deleteRow(index)}>Delete row</Button></td>
         </tr>
       );
     })
@@ -105,15 +106,15 @@ class AppBarebones extends React.Component {
             onChange={this.onMasterPasswordInputChange}
             value={this.state.masterPassword}
           />
-          <button type="submit">Load from file</button>
+          <Button type="submit">Load from file</Button>
           {this.state.isError ? <span>Error</span> : null}
         </form>
         <table><tbody>
           {rows}
         </tbody></table>
-        <button onClick={this.reloadFromFile}>Reload from file</button>
-        <button onClick={this.saveChanges}>Save changes</button>
-        <button onClick={this.addRow}>Add row</button>
+        <Button onClick={this.reloadFromFile}>Reload from file</Button>
+        <Button onClick={this.saveChanges}>Save changes</Button>
+        <Button onClick={this.addRow}>Add row</Button>
       </div>
     );
   }
