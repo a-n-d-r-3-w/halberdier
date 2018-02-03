@@ -25,14 +25,10 @@ function encrypt(string) {
 }
 
 function decrypt(string, masterPassword) {
-  try {
     const decipher = crypto.createDecipher('aes192', masterPassword);
     let decrypted = decipher.update(string, 'hex', 'utf8');
     decrypted += decipher.final('utf8');
     return decrypted;
-  } catch (error) {
-    return '{ "isError": true }';
-  }
 }
 
 function createWindow () {
@@ -52,9 +48,22 @@ function createWindow () {
   ipcMain.on('get-passwords', (event, masterPassword) => {
     console.log(`masterPassword: ${masterPassword}`);
     const fromFile = fs.readFileSync(path.join(__dirname, "passwords.json"), 'utf8');
-    // const decrypted = decrypt(fromFile);
-    const decrypted = decrypt(fromFile, masterPassword);
-    event.sender.send('passwords', JSON.parse(decrypted))
+    let decrypted;
+    let json;
+    try {
+      decrypted = decrypt(fromFile, masterPassword);
+      json = JSON.parse(decrypted);
+      json = {
+        passwords: json.passwords,
+        isError: false
+      }
+    } catch (error) {
+      json = {
+        passwords: [],
+        isError: true
+      };
+    }
+    event.sender.send('passwords', json)
   });
 
   ipcMain.on('save-changes', (event, state) => {
