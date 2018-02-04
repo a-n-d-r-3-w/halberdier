@@ -128,7 +128,8 @@ class AppBarebones extends React.Component {
   copyField(index, fieldName) {
     return (event) => {
       clipboard.writeText(this.state.passwords[index][fieldName]);
-      new Notification('Passwords', { body: `Copied ${fieldName}.` })
+      new Notification('Passwords', { body: `Copied ${fieldName}. Clipboard will be cleared in 20 seconds.` })
+      setTimeout(() => { clipboard.clear(); }, 20000);
     }
   }
 
