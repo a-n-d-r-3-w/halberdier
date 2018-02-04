@@ -51,7 +51,7 @@ class AppBarebones extends React.Component {
         super(props);
         this.state = {
             loadPassword: 'a password',
-            savePassword: 'a password',
+            savePassword: '',
             isError: false,
             passwords: []
         };
@@ -61,6 +61,7 @@ class AppBarebones extends React.Component {
         this.addRow = this.addRow.bind(this);
         this.deleteRow = this.deleteRow.bind(this);
         this.onLoadPasswordInputChange = this.onLoadPasswordInputChange.bind(this);
+        this.onSavePasswordInputChange = this.onSavePasswordInputChange.bind(this);
     }
 
     componentWillMount() {
@@ -73,6 +74,12 @@ class AppBarebones extends React.Component {
     onLoadPasswordInputChange(event) {
         this.setState({
             loadPassword: event.target.value
+        });
+    }
+
+    onSavePasswordInputChange(event) {
+        this.setState({
+            savePassword: event.target.value
         });
     }
 
@@ -104,6 +111,9 @@ class AppBarebones extends React.Component {
             passwords: this.state.passwords
         };
         ipcRenderer.send('save-changes', toSave);
+        this.setState({
+          savePassword: '',
+        });
     }
 
     addRow() {
@@ -193,7 +203,9 @@ class AppBarebones extends React.Component {
                                     value={this.state.loadPassword}
                                     error={this.state.isError}
                                 />
-                                <Button raised type="submit" className={classes.button}><InputIcon
+                                <Button
+                                  disabled={!this.state.loadPassword} 
+                                  raised type="submit" className={classes.button}><InputIcon
                                     className={classes.leftIcon}/>Load from file</Button>
                             </form>
                             <form onSubmit={this.reloadFromFile}>
@@ -205,8 +217,13 @@ class AppBarebones extends React.Component {
                                     value={this.state.savePassword}
                                     error={this.state.isError}
                                 />
-                                <Button raised onClick={this.saveChanges} className={classes.button}><SaveIcon
-                                    className={classes.leftIcon}/>Save changes</Button></form>
+                                <Button
+                                    raised onClick={this.saveChanges}
+                                    disabled={!this.state.savePassword}
+                                    className={classes.button}>
+                                    <SaveIcon className={classes.leftIcon}/>Save changes
+                                  </Button>
+                                </form>
                         </Grid>
                         <Grid item>
                             <List>
