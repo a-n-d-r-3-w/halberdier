@@ -220,7 +220,7 @@ class App extends React.Component {
                                 />
                                 <Button
                                     raised onClick={this.saveChanges}
-                                    disabled={!this.state.savePassword}
+                                    disabled={!this.state.savePassword || (this.state.passwords.length === 0)}
                                     className={classes.button}>
                                     <SaveIcon className={classes.leftIcon}/>Save changes
                                   </Button>
