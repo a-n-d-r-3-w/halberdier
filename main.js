@@ -22,8 +22,8 @@ function encrypt(string, savePassword) {
     return encrypted;
 }
 
-function decrypt(string, masterPassword) {
-    const decipher = crypto.createDecipher('aes192', masterPassword);
+function decrypt(string, loadPassword) {
+    const decipher = crypto.createDecipher('aes192', loadPassword);
     let decrypted = decipher.update(string, 'hex', 'utf8');
     decrypted += decipher.final('utf8');
     return decrypted;
@@ -43,12 +43,12 @@ function createWindow() {
     // Open the DevTools.
     // mainWindow.webContents.openDevTools()
 
-    ipcMain.on('get-passwords', (event, masterPassword) => {
+    ipcMain.on('get-passwords', (event, loadPassword) => {
         const fromFile = fs.readFileSync(path.join(__dirname, "passwords.json"), 'utf8');
         let decrypted;
         let json;
         try {
-            decrypted = decrypt(fromFile, masterPassword);
+            decrypted = decrypt(fromFile, loadPassword);
             json = JSON.parse(decrypted);
             json = {
                 passwords: json.passwords,

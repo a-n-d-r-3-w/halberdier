@@ -50,7 +50,7 @@ class AppBarebones extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loadPassword: 'a password',
+            loadPassword: '',
             savePassword: '',
             isLoadError: false,
             isSaveError: false,
@@ -69,7 +69,7 @@ class AppBarebones extends React.Component {
         ipcRenderer.on('passwords', (event, state) => {
             this.setState(state);
         });
-        this.reloadFromFile();
+        // this.reloadFromFile();
     }
 
     onLoadPasswordInputChange(event) {
