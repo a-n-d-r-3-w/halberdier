@@ -137,15 +137,15 @@ class AppBarebones extends React.Component {
   render() {
     const { classes } = this.props;
 
-    const rows = this.state.passwords.map((entry, index) => {
+    const listItems = this.state.passwords.map((entry, index) => {
       return (
-        <tr key={index}>
-          <td><IconButton onClick={this.deleteRow(index)}><DeleteIcon /></IconButton></td>
-          <td><Input
+        <li key={index}>
+          <IconButton onClick={this.deleteRow(index)}><DeleteIcon /></IconButton>
+          <Input
             className={classes.textField}
             value={entry.service}
-            onChange={this.onChange(index, 'service')}/></td>
-          <td><Input
+            onChange={this.onChange(index, 'service')}/>
+          <Input
             endAdornment={
               <InputAdornment position="end" onClick={this.copyField(index, 'username')}>
                 <IconButton><CopyIcon /></IconButton>
@@ -153,8 +153,8 @@ class AppBarebones extends React.Component {
             }
             className={classes.textField}
             value={entry.username}
-            onChange={this.onChange(index, 'username')} /></td>
-          <td><Input
+            onChange={this.onChange(index, 'username')} />
+          <Input
             endAdornment={
               <InputAdornment position="end" onClick={this.copyField(index, 'password')}>
                 <IconButton><CopyIcon /></IconButton>
@@ -162,8 +162,8 @@ class AppBarebones extends React.Component {
             }
             className={classes.textField}
             value={entry.password}
-            onChange={this.onChange(index, 'password')} /></td>
-        </tr>
+            onChange={this.onChange(index, 'password')} />
+        </li>
       );
     })
 
@@ -183,9 +183,9 @@ class AppBarebones extends React.Component {
               />
               <Button raised type="submit" className={classes.button}><InputIcon className={classes.leftIcon} />Load from file</Button>
             </form>
-            <table className={classes.table}><tbody>
-              {rows}
-            </tbody></table>
+            <ul className={classes.table}>
+              {listItems}
+            </ul>
             <div>
               <Button raised onClick={this.saveChanges} className={classes.button}><SaveIcon className={classes.leftIcon} />Save changes</Button>
               <Button raised onClick={this.addRow} className={classes.button}><AddIcon className={classes.leftIcon} />Add row</Button>
