@@ -25,6 +25,10 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 6,
     paddingBottom: theme.spacing.unit * 6,
   }),
+  list: {
+    marginTop: theme.spacing.unit * 6,
+    marginBottom: theme.spacing.unit * 6
+  },
   button: {
     margin: theme.spacing.unit,
   },
@@ -185,7 +189,7 @@ class AppBarebones extends React.Component {
               />
               <Button raised type="submit" className={classes.button}><InputIcon className={classes.leftIcon} />Load from file</Button>
             </form>
-            <List>
+            <List className={classes.list}>
               {listItems}
             </List>
             <div>
