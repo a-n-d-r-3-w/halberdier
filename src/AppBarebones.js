@@ -9,7 +9,7 @@ import AddIcon from 'material-ui-icons/Add';
 import InputIcon from 'material-ui-icons/Input';
 import TextField from 'material-ui/TextField';
 import Grid from 'material-ui/Grid';
-import Input, {InputLabel, InputAdornment} from 'material-ui/Input';
+import Input, {InputAdornment} from 'material-ui/Input';
 import CopyIcon from 'material-ui-icons/ContentCopy';
 import List, {ListItem} from 'material-ui/List';
 import Typography from 'material-ui/Typography';
@@ -133,7 +133,7 @@ class AppBarebones extends React.Component {
         return () => {
             this.setState((prevState) => {
                 const temp = prevState.passwords;
-                temp.splice(index, 1)
+                temp.splice(index, 1);
                 return {
                     passwords: temp,
                 };
@@ -142,9 +142,9 @@ class AppBarebones extends React.Component {
     }
 
     copyField(index, fieldName) {
-        return (event) => {
+        return () => {
             clipboard.writeText(this.state.passwords[index][fieldName]);
-            new Notification('Passwords', {body: `Copied ${fieldName}. Clipboard will be cleared in 20 seconds.`})
+            new Notification('Passwords', {body: `Copied ${fieldName}. Clipboard will be cleared in 20 seconds.`});
             setTimeout(() => {
                 clipboard.clear();
             }, 20000);
