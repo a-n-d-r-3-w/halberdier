@@ -31,16 +31,10 @@ const styles = theme => ({
   leftIcon: {
     marginRight: theme.spacing.unit,
   },
-  rightIcon: {
-    marginLeft: theme.spacing.unit,
-  },
   textField: {
-    margin: theme.spacing.unit
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit
   },
-  table: {
-    marginTop: theme.spacing.unit * 3,
-    marginBottom: theme.spacing.unit * 3
-  }
 });
 
 const {ipcRenderer} = require('electron');
@@ -185,7 +179,7 @@ class AppBarebones extends React.Component {
               />
               <Button raised type="submit" className={classes.button}><InputIcon className={classes.leftIcon} />Load from file</Button>
             </form>
-            <List className={classes.table}>
+            <List>
               {listItems}
             </List>
             <div>
