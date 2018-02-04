@@ -33,9 +33,7 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
   },
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
+    margin: theme.spacing.unit
   },
   table: {
     marginTop: theme.spacing.unit * 3,
@@ -49,7 +47,7 @@ class AppBarebones extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      masterPassword: '',
+      masterPassword: 'a password',
       isError: false,
       passwords: []
     };
@@ -65,6 +63,7 @@ class AppBarebones extends React.Component {
     ipcRenderer.on('passwords', (event, state) => {
       this.setState(state);
     });
+    this.reloadFromFile();
   }
 
   onMasterPasswordInputChange(event) {
@@ -87,7 +86,9 @@ class AppBarebones extends React.Component {
   }
 
   reloadFromFile(event) {
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
     ipcRenderer.send('get-passwords', this.state.masterPassword);
     this.setState({
       masterPassword: '',
@@ -140,7 +141,10 @@ class AppBarebones extends React.Component {
       return (
         <tr key={index}>
           <td><IconButton onClick={this.deleteRow(index)}><DeleteIcon /></IconButton></td>
-          <td><TextField className={classes.textField} value={entry.service} onChange={this.onChange(index, 'service')} /></td>
+          <td><Input
+            className={classes.textField}
+            value={entry.service}
+            onChange={this.onChange(index, 'service')}/></td>
           <td><Input
             endAdornment={
               <InputAdornment position="end" onClick={this.copyField(index, 'username')}>
