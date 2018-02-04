@@ -11,6 +11,8 @@ import TextField from 'material-ui/TextField';
 import Grid from 'material-ui/Grid';
 import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
 import CopyIcon from 'material-ui-icons/ContentCopy';
+import List, { ListItem } from 'material-ui/List';
+
 import { clipboard } from 'electron'
 
 import { withStyles } from 'material-ui/styles';
@@ -139,7 +141,7 @@ class AppBarebones extends React.Component {
 
     const listItems = this.state.passwords.map((entry, index) => {
       return (
-        <li key={index}>
+        <ListItem key={index} dense>
           <IconButton onClick={this.deleteRow(index)}><DeleteIcon /></IconButton>
           <Input
             className={classes.textField}
@@ -163,7 +165,7 @@ class AppBarebones extends React.Component {
             className={classes.textField}
             value={entry.password}
             onChange={this.onChange(index, 'password')} />
-        </li>
+        </ListItem>
       );
     })
 
@@ -183,9 +185,9 @@ class AppBarebones extends React.Component {
               />
               <Button raised type="submit" className={classes.button}><InputIcon className={classes.leftIcon} />Load from file</Button>
             </form>
-            <ul className={classes.table}>
+            <List className={classes.table}>
               {listItems}
-            </ul>
+            </List>
             <div>
               <Button raised onClick={this.saveChanges} className={classes.button}><SaveIcon className={classes.leftIcon} />Save changes</Button>
               <Button raised onClick={this.addRow} className={classes.button}><AddIcon className={classes.leftIcon} />Add row</Button>
