@@ -36,7 +36,10 @@ const styles = theme => ({
     marginRight: theme.spacing.unit
   },
   iconButton: {
-    height: theme.spacing.unit * 4
+    height: theme.typography.fontSize * 2
+  },
+  icon: {
+    fontSize: theme.typography.fontSize * 1.5
   }
 });
 
@@ -147,7 +150,7 @@ class AppBarebones extends React.Component {
           <Input
             endAdornment={
               <InputAdornment position="end" onClick={this.copyField(index, 'username')}>
-                <IconButton className={classes.iconButton}><CopyIcon /></IconButton>
+                <IconButton className={classes.iconButton}><CopyIcon className={classes.icon} /></IconButton>
               </InputAdornment>
             }
             className={classes.textField}
@@ -156,7 +159,7 @@ class AppBarebones extends React.Component {
           <Input
             endAdornment={
               <InputAdornment position="end" onClick={this.copyField(index, 'password')}>
-                <IconButton className={classes.iconButton}><CopyIcon /></IconButton>
+                <IconButton className={classes.iconButton}><CopyIcon className={classes.icon} /></IconButton>
               </InputAdornment>
             }
             className={classes.textField}
