@@ -46,7 +46,7 @@ const styles = theme => ({
 
 const {ipcRenderer} = require('electron');
 
-class AppBarebones extends React.Component {
+class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -242,4 +242,4 @@ class AppBarebones extends React.Component {
     }
 }
 
-export default withStyles(styles)(AppBarebones);
+export default withStyles(styles)(App);
