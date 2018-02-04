@@ -11,14 +11,12 @@ const url = require('url')
 const fs = require('fs');
 const crypto = require('crypto');
 
-const {dialog} = require('electron')
-
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-function encrypt(string) {
-    const cipher = crypto.createCipher('aes192', 'a password');
+function encrypt(string, savePassword) {
+    const cipher = crypto.createCipher('aes192', savePassword);
     let encrypted = cipher.update(string, 'utf8', 'hex');
     encrypted += cipher.final('hex');
     return encrypted;
@@ -65,9 +63,9 @@ function createWindow() {
         event.sender.send('passwords', json)
     });
 
-    ipcMain.on('save-changes', (event, state) => {
+    ipcMain.on('save-changes', (event, state, savePassword) => {
         const string = JSON.stringify(state);
-        const encrypted = encrypt(string);
+        const encrypted = encrypt(string, savePassword);
         fs.writeFileSync(path.join(__dirname, "passwords.json"), encrypted);
     });
 

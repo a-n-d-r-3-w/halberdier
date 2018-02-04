@@ -111,7 +111,7 @@ class AppBarebones extends React.Component {
         const toSave = {
             passwords: this.state.passwords
         };
-        ipcRenderer.send('save-changes', toSave);
+        ipcRenderer.send('save-changes', toSave, this.state.savePassword);
         this.setState({
           savePassword: '',
         });
