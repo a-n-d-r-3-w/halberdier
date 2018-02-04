@@ -35,6 +35,9 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit
   },
+  iconButton: {
+    height: theme.spacing.unit * 4
+  }
 });
 
 const {ipcRenderer} = require('electron');
@@ -144,7 +147,7 @@ class AppBarebones extends React.Component {
           <Input
             endAdornment={
               <InputAdornment position="end" onClick={this.copyField(index, 'username')}>
-                <IconButton><CopyIcon /></IconButton>
+                <IconButton className={classes.iconButton}><CopyIcon /></IconButton>
               </InputAdornment>
             }
             className={classes.textField}
@@ -153,7 +156,7 @@ class AppBarebones extends React.Component {
           <Input
             endAdornment={
               <InputAdornment position="end" onClick={this.copyField(index, 'password')}>
-                <IconButton><CopyIcon /></IconButton>
+                <IconButton className={classes.iconButton}><CopyIcon /></IconButton>
               </InputAdornment>
             }
             className={classes.textField}
