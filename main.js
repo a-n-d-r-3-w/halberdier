@@ -18,10 +18,10 @@ const {dialog} = require('electron')
 let mainWindow
 
 function encrypt(string) {
-  const cipher = crypto.createCipher('aes192', 'a password');
-  let encrypted = cipher.update(string, 'utf8', 'hex');
-  encrypted += cipher.final('hex');
-  return encrypted;
+    const cipher = crypto.createCipher('aes192', 'a password');
+    let encrypted = cipher.update(string, 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+    return encrypted;
 }
 
 function decrypt(string, masterPassword) {
@@ -31,53 +31,53 @@ function decrypt(string, masterPassword) {
     return decrypted;
 }
 
-function createWindow () {
-  // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 700})
+function createWindow() {
+    // Create the browser window.
+    mainWindow = new BrowserWindow({width: 800, height: 700})
 
-  // and load the index.html of the app.
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
+    // and load the index.html of the app.
+    mainWindow.loadURL(url.format({
+        pathname: path.join(__dirname, 'index.html'),
+        protocol: 'file:',
+        slashes: true
+    }))
 
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+    // Open the DevTools.
+    // mainWindow.webContents.openDevTools()
 
-  ipcMain.on('get-passwords', (event, masterPassword) => {
-    const fromFile = fs.readFileSync(path.join(__dirname, "passwords.json"), 'utf8');
-    let decrypted;
-    let json;
-    try {
-      decrypted = decrypt(fromFile, masterPassword);
-      json = JSON.parse(decrypted);
-      json = {
-        passwords: json.passwords,
-        isError: false
-      }
-    } catch (error) {
-      json = {
-        passwords: [],
-        isError: true
-      };
-    }
-    event.sender.send('passwords', json)
-  });
+    ipcMain.on('get-passwords', (event, masterPassword) => {
+        const fromFile = fs.readFileSync(path.join(__dirname, "passwords.json"), 'utf8');
+        let decrypted;
+        let json;
+        try {
+            decrypted = decrypt(fromFile, masterPassword);
+            json = JSON.parse(decrypted);
+            json = {
+                passwords: json.passwords,
+                isLoadError: false
+            }
+        } catch (error) {
+            json = {
+                passwords: [],
+                isLoadError: true
+            };
+        }
+        event.sender.send('passwords', json)
+    });
 
-  ipcMain.on('save-changes', (event, state) => {
-    const string = JSON.stringify(state);
-    const encrypted = encrypt(string);
-    fs.writeFileSync(path.join(__dirname, "passwords.json"), encrypted);
-  });
+    ipcMain.on('save-changes', (event, state) => {
+        const string = JSON.stringify(state);
+        const encrypted = encrypt(string);
+        fs.writeFileSync(path.join(__dirname, "passwords.json"), encrypted);
+    });
 
-  // Emitted when the window is closed.
-  mainWindow.on('closed', function () {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    mainWindow = null
-  })
+    // Emitted when the window is closed.
+    mainWindow.on('closed', function () {
+        // Dereference the window object, usually you would store windows
+        // in an array if your app supports multi windows, this is the time
+        // when you should delete the corresponding element.
+        mainWindow = null
+    })
 }
 
 // This method will be called when Electron has finished
@@ -87,19 +87,19 @@ app.on('ready', createWindow)
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
-  // On OS X it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
+    // On OS X it is common for applications and their menu bar
+    // to stay active until the user quits explicitly with Cmd + Q
+    if (process.platform !== 'darwin') {
+        app.quit()
+    }
 })
 
 app.on('activate', function () {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) {
-    createWindow()
-  }
+    // On OS X it's common to re-create a window in the app when the
+    // dock icon is clicked and there are no other windows open.
+    if (mainWindow === null) {
+        createWindow()
+    }
 })
 
 // In this file you can include the rest of your app's specific main process

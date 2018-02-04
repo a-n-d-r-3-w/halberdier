@@ -52,7 +52,8 @@ class AppBarebones extends React.Component {
         this.state = {
             loadPassword: 'a password',
             savePassword: '',
-            isError: false,
+            isLoadError: false,
+            isSaveError: false,
             passwords: []
         };
         this.onChange = this.onChange.bind(this);
@@ -201,7 +202,7 @@ class AppBarebones extends React.Component {
                                     placeholder="Enter password"
                                     onChange={this.onLoadPasswordInputChange}
                                     value={this.state.loadPassword}
-                                    error={this.state.isError}
+                                    error={this.state.isLoadError}
                                 />
                                 <Button
                                   disabled={!this.state.loadPassword} 
@@ -215,7 +216,7 @@ class AppBarebones extends React.Component {
                                     placeholder="Enter password"
                                     onChange={this.onSavePasswordInputChange}
                                     value={this.state.savePassword}
-                                    error={this.state.isError}
+                                    error={this.state.isSaveError}
                                 />
                                 <Button
                                     raised onClick={this.saveChanges}
