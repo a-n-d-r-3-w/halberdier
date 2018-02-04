@@ -12,6 +12,7 @@ import Grid from 'material-ui/Grid';
 import Input, { InputLabel, InputAdornment } from 'material-ui/Input';
 import CopyIcon from 'material-ui-icons/ContentCopy';
 import List, { ListItem } from 'material-ui/List';
+import Typography from 'material-ui/Typography';
 
 import { clipboard } from 'electron'
 
@@ -25,10 +26,6 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 6,
     paddingBottom: theme.spacing.unit * 6,
   }),
-  list: {
-    marginTop: theme.spacing.unit * 6,
-    marginBottom: theme.spacing.unit * 6
-  },
   button: {
     margin: theme.spacing.unit,
   },
@@ -177,25 +174,34 @@ class AppBarebones extends React.Component {
       <div>
         <Reboot />
         <Paper className={classes.root}>
-          <Grid direction="column" container alignItems="center">
-            <form onSubmit={this.reloadFromFile}>
-              <TextField
-                className={classes.textField}
-                type="password"
-                placeholder="Enter password"
-                onChange={this.onMasterPasswordInputChange}
-                value={this.state.masterPassword}
-                error={this.state.isError}
-              />
-              <Button raised type="submit" className={classes.button}><InputIcon className={classes.leftIcon} />Load from file</Button>
-            </form>
-            <List className={classes.list}>
-              {listItems}
-            </List>
-            <div>
-              <Button raised onClick={this.saveChanges} className={classes.button}><SaveIcon className={classes.leftIcon} />Save changes</Button>
-              <Button raised onClick={this.addRow} className={classes.button}><AddIcon className={classes.leftIcon} />Add row</Button>
-            </div>
+          <Grid direction="column" container alignItems="center" spacing={40}>
+            <Grid item>
+              <Typography type="display2" align="center">Passwords</Typography>
+            </Grid>
+            <Grid item>
+              <form onSubmit={this.reloadFromFile}>
+                <TextField
+                  className={classes.textField}
+                  type="password"
+                  placeholder="Enter password"
+                  onChange={this.onMasterPasswordInputChange}
+                  value={this.state.masterPassword}
+                  error={this.state.isError}
+                />
+                <Button raised type="submit" className={classes.button}><InputIcon className={classes.leftIcon} />Load from file</Button>
+              </form>
+            </Grid>
+            <Grid item>
+              <List>
+                {listItems}
+              </List>
+            </Grid>
+            <Grid item>
+              <div>
+                <Button raised onClick={this.saveChanges} className={classes.button}><SaveIcon className={classes.leftIcon} />Save changes</Button>
+                <Button raised onClick={this.addRow} className={classes.button}><AddIcon className={classes.leftIcon} />Add row</Button>
+              </div>
+            </Grid>
           </Grid>
         </Paper>
       </div>
