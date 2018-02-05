@@ -197,6 +197,7 @@ class App extends React.Component {
                         <Grid item>
                             <form onSubmit={this.reloadFromFile}>
                                 <TextField
+                                    autoFocus
                                     className={classes.textField}
                                     type="password"
                                     placeholder="Enter password"
