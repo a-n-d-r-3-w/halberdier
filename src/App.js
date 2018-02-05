@@ -107,7 +107,10 @@ class App extends React.Component {
         });
     }
 
-    saveChanges() {
+    saveChanges(event) {
+        if (event) {
+            event.preventDefault();
+        }
         const toSave = {
             passwords: this.state.passwords
         };
