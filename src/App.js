@@ -200,31 +200,29 @@ class App extends React.Component {
                                     autoFocus
                                     className={classes.textField}
                                     type="password"
-                                    placeholder="Enter password"
+                                    placeholder="Load password"
                                     onChange={this.onLoadPasswordInputChange}
                                     value={this.state.loadPassword}
                                     error={this.state.isLoadError}
                                 />
                                 <Button
-                                  disabled={!this.state.loadPassword} 
-                                  raised type="submit" className={classes.button}><InputIcon
+                                    disabled={!this.state.loadPassword}
+                                    raised type="submit" className={classes.button}><InputIcon
                                     className={classes.leftIcon}/>Load from file</Button>
                             </form>
-                            <form onSubmit={this.reloadFromFile}>
+                            <form onSubmit={this.saveChanges}>
                                 <TextField
                                     className={classes.textField}
                                     type="password"
-                                    placeholder="Enter password"
+                                    placeholder="Save password"
                                     onChange={this.onSavePasswordInputChange}
                                     value={this.state.savePassword}
                                     error={this.state.isSaveError}
                                 />
                                 <Button
-                                    raised onClick={this.saveChanges}
                                     disabled={!this.state.savePassword || (this.state.passwords.length === 0)}
-                                    className={classes.button}>
-                                    <SaveIcon className={classes.leftIcon}/>Save changes
-                                  </Button>
+                                    raised type="submit" className={classes.button}><SaveIcon
+                                    className={classes.leftIcon}/>Save changes</Button>
                                 </form>
                         </Grid>
                         <Grid item>
