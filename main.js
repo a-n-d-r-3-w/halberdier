@@ -11,6 +11,11 @@ const url = require('url')
 const fs = require('fs');
 const crypto = require('crypto');
 
+const os = require('os');
+
+// const passwordsFilePath = path.join(__dirname, "passwords.json");
+const passwordsFilePath = os.homedir() + "/passwords.json";
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -44,7 +49,7 @@ function createWindow() {
     // mainWindow.webContents.openDevTools()
 
     ipcMain.on('get-passwords', (event, loadPassword) => {
-        const fromFile = fs.readFileSync(path.join(__dirname, "passwords.json"), 'utf8');
+        const fromFile = fs.readFileSync(passwordsFilePath, 'utf8');
         let decrypted;
         let json;
         try {
@@ -66,7 +71,7 @@ function createWindow() {
     ipcMain.on('save-changes', (event, state, savePassword) => {
         const string = JSON.stringify(state);
         const encrypted = encrypt(string, savePassword);
-        fs.writeFileSync(path.join(__dirname, "passwords.json"), encrypted);
+        fs.writeFileSync(passwordsFilePath, encrypted);
     });
 
     // Emitted when the window is closed.
