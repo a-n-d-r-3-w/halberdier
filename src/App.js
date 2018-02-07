@@ -13,6 +13,7 @@ import Input, {InputAdornment} from 'material-ui/Input';
 import CopyIcon from 'material-ui-icons/ContentCopy';
 import List, {ListItem} from 'material-ui/List';
 import Typography from 'material-ui/Typography';
+import halberd from './halberd.png';
 
 import {clipboard} from 'electron'
 
@@ -195,7 +196,10 @@ class App extends React.Component {
                 <Paper className={classes.root}>
                     <Grid direction="column" container alignItems="center" spacing={40}>
                         <Grid item>
-                            <Typography type="display2" align="center">Passwords</Typography>
+                            <Typography type="display2" align="center">
+                                <img src={halberd} style={{ marginRight: "4px" }} />
+                                Halberdier
+                            </Typography>
                         </Grid>
                         <Grid item>
                             <form onSubmit={this.reloadFromFile}>

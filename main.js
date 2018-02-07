@@ -46,7 +46,7 @@ function createWindow() {
     }))
 
     // Open the DevTools.
-    // mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools()
 
     ipcMain.on('get-passwords', (event, loadPassword) => {
         const fromFile = fs.readFileSync(passwordsFilePath, 'utf8');
