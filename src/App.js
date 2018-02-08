@@ -196,7 +196,7 @@ class App extends React.Component {
                 <Paper className={classes.root}>
                     <Grid direction="column" container alignItems="center" spacing={40}>
                         <Grid item>
-                            <Typography type="display2" align="center">
+                            <Typography variant="display2" align="center">
                                 <img src={halberd} style={{ marginRight: "4px" }} />
                                 Halberdier
                             </Typography>
@@ -214,7 +214,7 @@ class App extends React.Component {
                                 />
                                 <Button
                                     disabled={!this.state.loadPassword}
-                                    raised type="submit" className={classes.button}><InputIcon
+                                    variant="raised" type="submit" className={classes.button}><InputIcon
                                     className={classes.leftIcon}/>Load from file</Button>
                             </form>
                             <form onSubmit={this.saveChanges}>
@@ -228,7 +228,7 @@ class App extends React.Component {
                                 />
                                 <Button
                                     disabled={!this.state.savePassword || (this.state.passwords.length === 0)}
-                                    raised type="submit" className={classes.button}><SaveIcon
+                                    variant="raised" type="submit" className={classes.button}><SaveIcon
                                     className={classes.leftIcon}/>Save changes</Button>
                                 </form>
                         </Grid>
@@ -238,7 +238,7 @@ class App extends React.Component {
                             </List>
                         </Grid>
                         <Grid item>
-                            <Button raised onClick={this.addRow} className={classes.button}><AddIcon
+                            <Button variant="raised" onClick={this.addRow} className={classes.button}><AddIcon
                                 className={classes.leftIcon}/>Add row</Button>
                         </Grid>
                     </Grid>
