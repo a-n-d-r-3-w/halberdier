@@ -55,17 +55,10 @@ function createWindow() {
         try {
             decrypted = decrypt(fromFile, loadPassword);
             json = JSON.parse(decrypted);
-            json = {
-                passwords: json.passwords,
-                isLoadError: false
-            }
+            event.sender.send('load-success', json)
         } catch (error) {
-            json = {
-                passwords: [],
-                isLoadError: true
-            };
+            event.sender.send('load-error', {})
         }
-        event.sender.send('passwords', json)
     });
 
     ipcMain.on('save-changes', (event, state, savePassword) => {

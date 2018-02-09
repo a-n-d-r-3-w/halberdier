@@ -6,13 +6,19 @@ import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
 import SaveIcon from 'material-ui-icons/Save';
 import AddIcon from 'material-ui-icons/Add';
-import InputIcon from 'material-ui-icons/Input';
+import FolderOpenIcon from 'material-ui-icons/FolderOpen';
 import TextField from 'material-ui/TextField';
 import Grid from 'material-ui/Grid';
 import Input, {InputAdornment} from 'material-ui/Input';
 import CopyIcon from 'material-ui-icons/ContentCopy';
 import List, {ListItem} from 'material-ui/List';
 import Typography from 'material-ui/Typography';
+import Dialog, {
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+} from 'material-ui/Dialog';
+
 import halberd from './halberd.png';
 
 import {clipboard} from 'electron'
@@ -55,7 +61,8 @@ class App extends React.Component {
             savePassword: '',
             isLoadError: false,
             isSaveError: false,
-            passwords: []
+            passwords: [],
+            isLoadDialogOpen: false,
         };
         this.onChange = this.onChange.bind(this);
         this.reloadFromFile = this.reloadFromFile.bind(this);
@@ -64,13 +71,31 @@ class App extends React.Component {
         this.deleteRow = this.deleteRow.bind(this);
         this.onLoadPasswordInputChange = this.onLoadPasswordInputChange.bind(this);
         this.onSavePasswordInputChange = this.onSavePasswordInputChange.bind(this);
+        this.handleClickOpenLoadDialog = this.handleClickOpenLoadDialog.bind(this);
+        this.handleCloseLoadDialog = this.handleCloseLoadDialog.bind(this);
     }
 
+    handleClickOpenLoadDialog() {
+        this.setState({ isLoadDialogOpen: true });
+    };
+
+    handleCloseLoadDialog() {
+        this.setState({ isLoadDialogOpen: false });
+    };
+
     componentWillMount() {
-        ipcRenderer.on('passwords', (event, state) => {
-            this.setState(state);
+        ipcRenderer.on('load-success', (event, state) => {
+            this.setState({
+                passwords: state.passwords,
+                isLoadDialogOpen: false,
+                isLoadError: false,
+            });
         });
-        // this.reloadFromFile();
+        ipcRenderer.on('load-error', () => {
+            this.setState({
+                isLoadError: true,
+            });
+        });
     }
 
     onLoadPasswordInputChange(event) {
@@ -202,21 +227,49 @@ class App extends React.Component {
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <form onSubmit={this.reloadFromFile}>
-                                <TextField
-                                    autoFocus
-                                    className={classes.textField}
-                                    type="password"
-                                    placeholder="Load password"
-                                    onChange={this.onLoadPasswordInputChange}
-                                    value={this.state.loadPassword}
-                                    error={this.state.isLoadError}
-                                />
-                                <Button
-                                    disabled={!this.state.loadPassword}
-                                    variant="raised" type="submit" className={classes.button}><InputIcon
-                                    className={classes.leftIcon}/>Load from file</Button>
-                            </form>
+                            <Button
+                                variant="raised"
+                                onClick={this.handleClickOpenLoadDialog}
+                                className={classes.button}
+                            >
+                                <FolderOpenIcon className={classes.leftIcon}/>
+                                Open
+                            </Button>
+                            <Dialog
+                                open={this.state.isLoadDialogOpen}
+                                onClose={this.handleCloseLoadDialog}
+                                aria-labelledby="load-dialog"
+                            >
+                                <DialogTitle id="load-dialog">Load passwords from ~/passwords.json</DialogTitle>
+                                <form onSubmit={this.reloadFromFile}>
+                                    <DialogContent>
+                                            <TextField
+                                                autoFocus
+                                                fullWidth
+                                                type="password"
+                                                label="Master password"
+                                                onChange={this.onLoadPasswordInputChange}
+                                                value={this.state.loadPassword}
+                                                error={this.state.isLoadError}
+                                            />
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button
+                                            onClick={this.handleCloseLoadDialog}
+                                            color="primary">
+                                            Cancel
+                                        </Button>
+                                        <Button
+                                            disabled={!this.state.loadPassword}
+                                            type="submit"
+                                            color="primary">
+                                            Load
+                                        </Button>
+                                    </DialogActions>
+                                </form>
+                            </Dialog>
+                        </Grid>
+                        <Grid item>
                             <form onSubmit={this.saveChanges}>
                                 <TextField
                                     className={classes.textField}
