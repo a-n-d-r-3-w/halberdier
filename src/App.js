@@ -18,6 +18,7 @@ import Dialog, {
     DialogContent,
     DialogTitle,
 } from 'material-ui/Dialog';
+import Tooltip from 'material-ui/Tooltip';
 
 import halberd from './halberd.png';
 
@@ -229,8 +230,14 @@ class App extends React.Component {
                     <Input
                         endAdornment={
                             <InputAdornment position="end" onClick={this.copyField(index, 'username')}>
-                                <IconButton className={classes.iconButton} color="primary"><CopyIcon
-                                    className={classes.icon}/></IconButton>
+                                <Tooltip title="Copy username">
+                                    <div><IconButton
+                                        className={classes.iconButton}
+                                        color="primary"
+                                        disabled={!this.state.passwords[index].username}>
+                                        <CopyIcon className={classes.icon}/>
+                                    </IconButton></div>
+                                </Tooltip>
                             </InputAdornment>
                         }
                         className={classes.textField}
@@ -239,8 +246,15 @@ class App extends React.Component {
                     <Input
                         endAdornment={
                             <InputAdornment position="end" onClick={this.copyField(index, 'password')}>
-                                <IconButton className={classes.iconButton} color="primary"><CopyIcon
-                                    className={classes.icon}/></IconButton>
+                                <Tooltip title="Copy password">
+                                    <div><IconButton
+                                        className={classes.iconButton}
+                                        color="primary"
+                                        disabled={!this.state.passwords[index].password}
+                                    >
+                                        <CopyIcon className={classes.icon}/>
+                                    </IconButton></div>
+                                </Tooltip>
                             </InputAdornment>
                         }
                         className={classes.textField}
