@@ -57,14 +57,19 @@ function createWindow() {
             json = JSON.parse(decrypted);
             event.sender.send('load-success', json)
         } catch (error) {
-            event.sender.send('load-error', {})
+            event.sender.send('load-error')
         }
     });
 
     ipcMain.on('save-changes', (event, state, savePassword) => {
-        const string = JSON.stringify(state);
-        const encrypted = encrypt(string, savePassword);
-        fs.writeFileSync(passwordsFilePath, encrypted);
+        try {
+            const string = JSON.stringify(state);
+            const encrypted = encrypt(string, savePassword);
+            fs.writeFileSync(passwordsFilePath, encrypted);
+            event.sender.send('save-success');
+        } catch (error) {
+            event.sender.send('save-error');
+        }
     });
 
     // Emitted when the window is closed.

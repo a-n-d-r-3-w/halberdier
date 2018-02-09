@@ -25,6 +25,8 @@ import {clipboard} from 'electron'
 
 import {withStyles} from 'material-ui/styles';
 
+const APP_NAME = 'Halberdier';
+
 const styles = theme => ({
     root: theme.mixins.gutters({
         marginTop: theme.spacing.unit * 3,
@@ -63,6 +65,7 @@ class App extends React.Component {
             isSaveError: false,
             passwords: [],
             isLoadDialogOpen: false,
+            isSaveDialogOpen: false,
         };
         this.onChange = this.onChange.bind(this);
         this.reloadFromFile = this.reloadFromFile.bind(this);
@@ -72,7 +75,9 @@ class App extends React.Component {
         this.onLoadPasswordInputChange = this.onLoadPasswordInputChange.bind(this);
         this.onSavePasswordInputChange = this.onSavePasswordInputChange.bind(this);
         this.handleClickOpenLoadDialog = this.handleClickOpenLoadDialog.bind(this);
+        this.handleClickOpenSaveDialog = this.handleClickOpenSaveDialog.bind(this);
         this.handleCloseLoadDialog = this.handleCloseLoadDialog.bind(this);
+        this.handleCloseSaveDialog = this.handleCloseSaveDialog.bind(this);
     }
 
     handleClickOpenLoadDialog() {
@@ -83,12 +88,22 @@ class App extends React.Component {
         this.setState({ isLoadDialogOpen: false });
     };
 
+    handleClickOpenSaveDialog() {
+        this.setState({ isSaveDialogOpen: true });
+    };
+
+    handleCloseSaveDialog() {
+        this.setState({ isSaveDialogOpen: false });
+    };
+
     componentWillMount() {
         ipcRenderer.on('load-success', (event, state) => {
             this.setState({
                 passwords: state.passwords,
                 isLoadDialogOpen: false,
                 isLoadError: false,
+            }, () => {
+                new Notification(APP_NAME, {body: `Passwords loaded.`});
             });
         });
         ipcRenderer.on('load-error', () => {
@@ -96,6 +111,20 @@ class App extends React.Component {
                 isLoadError: true,
             });
         });
+
+        ipcRenderer.on('save-success', () => {
+            this.setState({
+                isSaveDialogOpen: false,
+                isSaveError: false,
+            }, () => {
+                new Notification(APP_NAME, {body: `Passwords saved.`});
+            });
+        });
+        ipcRenderer.on('save-error', () => {
+            this.setState({
+                isSaveError: true,
+            });
+        })
     }
 
     onLoadPasswordInputChange(event) {
@@ -173,7 +202,7 @@ class App extends React.Component {
     copyField(index, fieldName) {
         return () => {
             clipboard.writeText(this.state.passwords[index][fieldName]);
-            new Notification('Passwords', {body: `Copied ${fieldName}. Clipboard will be cleared in 20 seconds.`});
+            new Notification(APP_NAME, {body: `Copied ${fieldName}. Clipboard will be cleared in 20 seconds.`});
             setTimeout(() => {
                 clipboard.clear();
             }, 20000);
@@ -270,20 +299,48 @@ class App extends React.Component {
                             </Dialog>
                         </Grid>
                         <Grid item>
-                            <form onSubmit={this.saveChanges}>
-                                <TextField
-                                    className={classes.textField}
-                                    type="password"
-                                    placeholder="Save password"
-                                    onChange={this.onSavePasswordInputChange}
-                                    value={this.state.savePassword}
-                                    error={this.state.isSaveError}
-                                />
-                                <Button
-                                    disabled={!this.state.savePassword || (this.state.passwords.length === 0)}
-                                    variant="raised" type="submit" className={classes.button}><SaveIcon
-                                    className={classes.leftIcon}/>Save changes</Button>
+                            <Button
+                                variant="raised"
+                                onClick={this.handleClickOpenSaveDialog}
+                                className={classes.button}
+                                disabled={this.state.passwords.length === 0}
+                            >
+                                <SaveIcon className={classes.leftIcon}/>
+                                Save
+                            </Button>
+                            <Dialog
+                                open={this.state.isSaveDialogOpen}
+                                onClose={this.handleCloseSaveDialog}
+                                aria-labelledby="load-dialog"
+                            >
+                                <DialogTitle id="load-dialog">Save passwords ~/passwords.json</DialogTitle>
+                                <form onSubmit={this.saveChanges}>
+                                    <DialogContent>
+                                        <TextField
+                                            autoFocus
+                                            fullWidth
+                                            type="password"
+                                            label="Master password"
+                                            onChange={this.onSavePasswordInputChange}
+                                            value={this.state.savePassword}
+                                            error={this.state.isSaveError}
+                                        />
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button
+                                            onClick={this.handleCloseSaveDialog}
+                                            color="primary">
+                                            Cancel
+                                        </Button>
+                                        <Button
+                                            disabled={!this.state.savePassword}
+                                            type="submit"
+                                            color="primary">
+                                            Load
+                                        </Button>
+                                    </DialogActions>
                                 </form>
+                            </Dialog>
                         </Grid>
                         <Grid item>
                             <List>
