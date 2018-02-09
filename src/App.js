@@ -66,6 +66,7 @@ class App extends React.Component {
             passwords: [],
             isLoadDialogOpen: false,
             isSaveDialogOpen: false,
+            isDirty: false,
         };
         this.onChange = this.onChange.bind(this);
         this.reloadFromFile = this.reloadFromFile.bind(this);
@@ -102,6 +103,7 @@ class App extends React.Component {
                 passwords: state.passwords,
                 isLoadDialogOpen: false,
                 isLoadError: false,
+                isDirty: false,
             }, () => {
                 new Notification(APP_NAME, {body: `Passwords loaded.`});
             });
@@ -116,6 +118,7 @@ class App extends React.Component {
             this.setState({
                 isSaveDialogOpen: false,
                 isSaveError: false,
+                isDirty: false,
             }, () => {
                 new Notification(APP_NAME, {body: `Passwords saved.`});
             });
@@ -146,7 +149,8 @@ class App extends React.Component {
                 const nextPasswords = prevState.passwords;
                 nextPasswords[index][fieldName] = value;
                 return {
-                    passwords: nextPasswords
+                    passwords: nextPasswords,
+                    isDirty: true,
                 };
             })
         }
@@ -183,6 +187,7 @@ class App extends React.Component {
                     username: '',
                     password: '',
                 }],
+                isDirty: true,
             };
         })
     }
@@ -194,6 +199,7 @@ class App extends React.Component {
                 temp.splice(index, 1);
                 return {
                     passwords: temp,
+                    isDirty: true,
                 };
             })
         }
@@ -303,7 +309,7 @@ class App extends React.Component {
                                 variant="raised"
                                 onClick={this.handleClickOpenSaveDialog}
                                 className={classes.button}
-                                disabled={this.state.passwords.length === 0}
+                                disabled={this.state.passwords.length === 0 || !this.state.isDirty}
                             >
                                 <SaveIcon className={classes.leftIcon}/>
                                 Save
