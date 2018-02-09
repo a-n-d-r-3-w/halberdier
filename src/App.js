@@ -222,7 +222,9 @@ class App extends React.Component {
         const listItems = this.state.passwords.map((entry, index) => {
             return (
                 <ListItem key={index} dense>
-                    <IconButton onClick={this.deleteRow(index)}><DeleteIcon/></IconButton>
+                    <Tooltip title="Delete row">
+                        <IconButton onClick={this.deleteRow(index)}><DeleteIcon/></IconButton>
+                    </Tooltip>
                     <Input
                         className={classes.textField}
                         value={entry.service}
