@@ -288,6 +288,7 @@ class App extends React.Component {
                         </Grid>
                         <Grid item>
                             <Button
+                                autoFocus
                                 variant="raised"
                                 onClick={this.handleClickOpenLoadDialog}
                                 className={classes.button}
@@ -385,8 +386,10 @@ class App extends React.Component {
                             </List>
                         </Grid>
                         <Grid item>
-                            <Button variant="raised" onClick={this.addRow} className={classes.button}><AddIcon
-                                className={classes.leftIcon}/>Add row</Button>
+                            <Button variant="raised" onClick={this.addRow} className={classes.button}>
+                                <AddIcon className={classes.leftIcon}/>
+                                Add row
+                            </Button>
                         </Grid>
                     </Grid>
                 </Paper>
