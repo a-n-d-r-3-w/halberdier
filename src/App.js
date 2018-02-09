@@ -7,7 +7,6 @@ import DeleteIcon from 'material-ui-icons/Delete';
 import SaveIcon from 'material-ui-icons/Save';
 import AddIcon from 'material-ui-icons/Add';
 import FolderOpenIcon from 'material-ui-icons/FolderOpen';
-import NoteAdd from 'material-ui-icons/NoteAdd';
 import TextField from 'material-ui/TextField';
 import Grid from 'material-ui/Grid';
 import Input, {InputAdornment} from 'material-ui/Input';
@@ -279,13 +278,6 @@ class App extends React.Component {
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <Button
-                                variant="raised"
-                                className={classes.button}
-                            >
-                                <NoteAdd className={classes.leftIcon}/>
-                                New
-                            </Button>
                             <Button
                                 variant="raised"
                                 onClick={this.handleClickOpenLoadDialog}
