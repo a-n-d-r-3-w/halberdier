@@ -229,7 +229,7 @@ class App extends React.Component {
                     <Input
                         endAdornment={
                             <InputAdornment position="end" onClick={this.copyField(index, 'username')}>
-                                <IconButton className={classes.iconButton}><CopyIcon
+                                <IconButton className={classes.iconButton} color="primary"><CopyIcon
                                     className={classes.icon}/></IconButton>
                             </InputAdornment>
                         }
@@ -239,7 +239,7 @@ class App extends React.Component {
                     <Input
                         endAdornment={
                             <InputAdornment position="end" onClick={this.copyField(index, 'password')}>
-                                <IconButton className={classes.iconButton}><CopyIcon
+                                <IconButton className={classes.iconButton} color="primary"><CopyIcon
                                     className={classes.icon}/></IconButton>
                             </InputAdornment>
                         }
@@ -303,8 +303,6 @@ class App extends React.Component {
                                     </DialogActions>
                                 </form>
                             </Dialog>
-                        </Grid>
-                        <Grid item>
                             <Button
                                 variant="raised"
                                 onClick={this.handleClickOpenSaveDialog}
