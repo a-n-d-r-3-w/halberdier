@@ -62,6 +62,7 @@ class App extends React.Component {
         this.state = {
             loadPassword: '',
             savePassword: '',
+            savePassword2: '',
             isLoadError: false,
             isSaveError: false,
             passwords: [],
@@ -76,6 +77,7 @@ class App extends React.Component {
         this.deleteRow = this.deleteRow.bind(this);
         this.onLoadPasswordInputChange = this.onLoadPasswordInputChange.bind(this);
         this.onSavePasswordInputChange = this.onSavePasswordInputChange.bind(this);
+        this.onSavePasswordInputChange2 = this.onSavePasswordInputChange2.bind(this);
         this.handleClickOpenLoadDialog = this.handleClickOpenLoadDialog.bind(this);
         this.handleClickOpenSaveDialog = this.handleClickOpenSaveDialog.bind(this);
         this.handleCloseLoadDialog = this.handleCloseLoadDialog.bind(this);
@@ -143,6 +145,12 @@ class App extends React.Component {
         });
     }
 
+    onSavePasswordInputChange2(event) {
+        this.setState({
+            savePassword2: event.target.value
+        });
+    }
+
     onChange(index, fieldName) {
         return (event) => {
             const value = event.target.value;
@@ -176,7 +184,8 @@ class App extends React.Component {
         };
         ipcRenderer.send('save-changes', toSave, this.state.savePassword);
         this.setState({
-          savePassword: '',
+            savePassword: '',
+            savePassword2: '',
         });
     }
 
@@ -345,6 +354,14 @@ class App extends React.Component {
                                             value={this.state.savePassword}
                                             error={this.state.isSaveError}
                                         />
+                                        <TextField
+                                            fullWidth
+                                            type="password"
+                                            label="Confirm master password"
+                                            onChange={this.onSavePasswordInputChange2}
+                                            value={this.state.savePassword2}
+                                            error={this.state.isSaveError}
+                                        />
                                     </DialogContent>
                                     <DialogActions>
                                         <Button
@@ -353,7 +370,7 @@ class App extends React.Component {
                                             Cancel
                                         </Button>
                                         <Button
-                                            disabled={!this.state.savePassword}
+                                            disabled={!this.state.savePassword || (this.state.savePassword !== this.state.savePassword2)}
                                             type="submit"
                                             color="primary">
                                             Load
