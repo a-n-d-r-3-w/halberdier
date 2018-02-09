@@ -342,7 +342,7 @@ class App extends React.Component {
                                 onClose={this.handleCloseSaveDialog}
                                 aria-labelledby="load-dialog"
                             >
-                                <DialogTitle id="load-dialog">Save passwords ~/passwords.json</DialogTitle>
+                                <DialogTitle id="load-dialog">Save passwords to ~/passwords.json</DialogTitle>
                                 <form onSubmit={this.saveChanges}>
                                     <DialogContent>
                                         <TextField
