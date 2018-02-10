@@ -238,9 +238,9 @@ class App extends React.Component {
         }
     }
 
-    copyField(index, fieldName) {
+    copyField(id, fieldName) {
         return () => {
-            clipboard.writeText(this.state.passwords[index][fieldName]);
+            clipboard.writeText(this.state.passwords.find(password => password.id === id)[fieldName]);
             new Notification(APP_NAME, {body: `Copied ${fieldName}. Clipboard will be cleared in 20 seconds.`});
             setTimeout(() => {
                 clipboard.clear();
@@ -264,7 +264,7 @@ class App extends React.Component {
                         onChange={this.onChange(item.id, 'service')}/>
                     <Input
                         endAdornment={
-                            <InputAdornment position="end" onClick={this.copyField(index, 'username')}>
+                            <InputAdornment position="end" onClick={this.copyField(item.id, 'username')}>
                                 <Tooltip title="Copy username">
                                     <div><IconButton
                                         className={classes.iconButton}
@@ -280,7 +280,7 @@ class App extends React.Component {
                         onChange={this.onChange(item.id, 'username')}/>
                     <Input
                         endAdornment={
-                            <InputAdornment position="end" onClick={this.copyField(index, 'password')}>
+                            <InputAdornment position="end" onClick={this.copyField(item.id, 'password')}>
                                 <Tooltip title="Copy password">
                                     <div><IconButton
                                         className={classes.iconButton}
