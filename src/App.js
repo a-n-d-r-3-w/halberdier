@@ -174,13 +174,12 @@ class App extends React.Component {
         }, this.updateFilteredPasswords);
     }
 
-    onChange(index, fieldName) {
+    onChange(id, fieldName) {
         return (event) => {
             const value = event.target.value;
             this.setState((prevState) => {
                 const nextPasswords = prevState.passwords;
-                nextPasswords[index][fieldName] = value;
-                nextPasswords[index].id = ipcRenderer.sendSync('generate-item-id', nextPasswords[index]);
+                nextPasswords.find(password => password.id === id)[fieldName] = value;
                 return {
                     passwords: nextPasswords,
                     isDirty: true,
@@ -220,7 +219,7 @@ class App extends React.Component {
                 username: '',
                 password: '',
             };
-            newPassword.id = ipcRenderer.sendSync('generate-item-id', newPassword);
+            newPassword.id = Date.now().toString(16);
             return {
                 passwords: [...prevState.passwords, newPassword],
                 isDirty: true,
@@ -254,7 +253,7 @@ class App extends React.Component {
 
         const listItems = this.state.passwords.map((item, index) => {
             return (
-                <ListItem key={index} dense>
+                <ListItem key={item.id} dense>
                     {item.id}
                     <Tooltip title="Delete row">
                         <IconButton onClick={this.deleteRow(item.id)}><DeleteIcon/></IconButton>
@@ -262,7 +261,7 @@ class App extends React.Component {
                     <Input
                         className={classes.textField}
                         value={item.service}
-                        onChange={this.onChange(index, 'service')}/>
+                        onChange={this.onChange(item.id, 'service')}/>
                     <Input
                         endAdornment={
                             <InputAdornment position="end" onClick={this.copyField(index, 'username')}>
@@ -278,7 +277,7 @@ class App extends React.Component {
                         }
                         className={classes.textField}
                         value={item.username}
-                        onChange={this.onChange(index, 'username')}/>
+                        onChange={this.onChange(item.id, 'username')}/>
                     <Input
                         endAdornment={
                             <InputAdornment position="end" onClick={this.copyField(index, 'password')}>
@@ -295,7 +294,7 @@ class App extends React.Component {
                         }
                         className={classes.textField}
                         value={item.password}
-                        onChange={this.onChange(index, 'password')}/>
+                        onChange={this.onChange(item.id, 'password')}/>
                 </ListItem>
             );
         });
