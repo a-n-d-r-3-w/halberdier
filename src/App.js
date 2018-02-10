@@ -59,6 +59,7 @@ const {ipcRenderer} = require('electron');
 
 class App extends React.Component {
     constructor(props) {
+        // noinspection JSCheckFunctionSignatures
         super(props);
         this.state = {
             loadPassword: '',
@@ -67,6 +68,7 @@ class App extends React.Component {
             isLoadError: false,
             isSaveError: false,
             passwords: [],
+            filteredPasswords: [],
             isLoadDialogOpen: false,
             isSaveDialogOpen: false,
             isDirty: false,
@@ -85,7 +87,19 @@ class App extends React.Component {
         this.handleClickOpenSaveDialog = this.handleClickOpenSaveDialog.bind(this);
         this.handleCloseLoadDialog = this.handleCloseLoadDialog.bind(this);
         this.handleCloseSaveDialog = this.handleCloseSaveDialog.bind(this);
+        this.updateFilteredPasswords = this.updateFilteredPasswords.bind(this);
     }
+
+    updateFilteredPasswords() {
+        this.setState(prevState => {
+            const filterFn = password => password.service.toLowerCase().indexOf(prevState.filterText) !== -1;
+            const filteredPasswords = prevState.passwords.filter(filterFn);
+            console.log(filteredPasswords.map(password => (password.service)));
+            return {
+                filteredPasswords
+            };
+        });
+    };
 
     handleClickOpenLoadDialog() {
         this.setState({ isLoadDialogOpen: true });
@@ -156,8 +170,8 @@ class App extends React.Component {
 
     onFilterTextChange(event) {
         this.setState({
-            filterText: event.target.value
-        });
+            filterText: event.target.value.toLowerCase()
+        }, this.updateFilteredPasswords);
     }
 
     onChange(index, fieldName) {
