@@ -7,6 +7,7 @@ import DeleteIcon from 'material-ui-icons/Delete';
 import SaveIcon from 'material-ui-icons/Save';
 import AddIcon from 'material-ui-icons/Add';
 import FolderOpenIcon from 'material-ui-icons/FolderOpen';
+import SearchIcon from 'material-ui-icons/Search';
 import TextField from 'material-ui/TextField';
 import Grid from 'material-ui/Grid';
 import Input, {InputAdornment} from 'material-ui/Input';
@@ -69,7 +70,7 @@ class App extends React.Component {
             isLoadDialogOpen: false,
             isSaveDialogOpen: false,
             isDirty: false,
-            filterTerm: '',
+            filterText: '',
         };
         this.onChange = this.onChange.bind(this);
         this.reloadFromFile = this.reloadFromFile.bind(this);
@@ -79,7 +80,7 @@ class App extends React.Component {
         this.onLoadPasswordInputChange = this.onLoadPasswordInputChange.bind(this);
         this.onSavePasswordInputChange = this.onSavePasswordInputChange.bind(this);
         this.onSavePasswordInputChange2 = this.onSavePasswordInputChange2.bind(this);
-        this.onFilterTermChange = this.onFilterTermChange.bind(this);
+        this.onFilterTextChange = this.onFilterTextChange.bind(this);
         this.handleClickOpenLoadDialog = this.handleClickOpenLoadDialog.bind(this);
         this.handleClickOpenSaveDialog = this.handleClickOpenSaveDialog.bind(this);
         this.handleCloseLoadDialog = this.handleCloseLoadDialog.bind(this);
@@ -153,9 +154,9 @@ class App extends React.Component {
         });
     }
 
-    onFilterTermChange(event) {
+    onFilterTextChange(event) {
         this.setState({
-            filterTerm: event.target.value
+            filterText: event.target.value
         });
     }
 
@@ -389,11 +390,18 @@ class App extends React.Component {
                             </Dialog>
                         </Grid>
                         <Grid item>
-                            <TextField
-                                label="Filter"
-                                onChange={this.onFilterTermChange}
-                                value={this.state.filterTerm}
-                            />
+                            <Input
+                                placeholder="Filter"
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <SearchIcon className={classes.iconButton}>
+                                            <CopyIcon className={classes.icon}/>
+                                        </SearchIcon>
+                                    </InputAdornment>
+                                }
+                                className={classes.textField}
+                                value={this.state.filterText}
+                                onChange={this.onFilterTextChange}/>
                         </Grid>
                         <Grid item>
                             <List>
