@@ -33,6 +33,12 @@ function decrypt(string, loadPassword) {
     return decrypted;
 }
 
+function getHash(string) {
+    const hash = crypto.createHash('sha256');
+    hash.update(string + Date.now());
+    return hash.digest('hex');
+}
+
 function createWindow() {
     // Create the browser window.
     mainWindow = new BrowserWindow({width: 800, height: 700});
@@ -69,6 +75,11 @@ function createWindow() {
         } catch (error) {
             event.sender.send('save-error');
         }
+    });
+
+    ipcMain.on('generate-item-id', (event, item) => {
+        const string = JSON.stringify(item);
+        event.returnValue = getHash(string);
     });
 
     // Emitted when the window is closed.

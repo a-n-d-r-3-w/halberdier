@@ -350,9 +350,9 @@ class App extends React.Component {
                             <Dialog
                                 open={this.state.isSaveDialogOpen}
                                 onClose={this.handleCloseSaveDialog}
-                                aria-labelledby="load-dialog"
+                                aria-labelledby="save-dialog"
                             >
-                                <DialogTitle id="load-dialog">Save passwords to ~/passwords.json</DialogTitle>
+                                <DialogTitle id="save-dialog">Save passwords to ~/passwords.json</DialogTitle>
                                 <form onSubmit={this.saveChanges}>
                                     <DialogContent>
                                         <TextField
@@ -383,7 +383,7 @@ class App extends React.Component {
                                             disabled={!this.state.savePassword || (this.state.savePassword !== this.state.savePassword2)}
                                             type="submit"
                                             color="primary">
-                                            Load
+                                            Save
                                         </Button>
                                     </DialogActions>
                                 </form>
