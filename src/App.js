@@ -389,20 +389,22 @@ class App extends React.Component {
                                 </form>
                             </Dialog>
                         </Grid>
-                        <Grid item>
-                            <Input
-                                placeholder="Filter"
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <SearchIcon className={classes.iconButton}>
-                                            <CopyIcon className={classes.icon}/>
-                                        </SearchIcon>
-                                    </InputAdornment>
-                                }
-                                className={classes.textField}
-                                value={this.state.filterText}
-                                onChange={this.onFilterTextChange}/>
-                        </Grid>
+                        {
+                            (this.state.passwords.length !== 0) && <Grid item >
+                                <Input
+                                    placeholder="Filter"
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <SearchIcon className={classes.iconButton}>
+                                                <CopyIcon className={classes.icon}/>
+                                            </SearchIcon>
+                                        </InputAdornment>
+                                    }
+                                    className={classes.textField}
+                                    value={this.state.filterText}
+                                    onChange={this.onFilterTextChange}/>
+                            </Grid>
+                        }
                         <Grid item>
                             <List>
                                 {listItems}
