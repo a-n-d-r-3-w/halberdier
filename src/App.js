@@ -69,6 +69,7 @@ class App extends React.Component {
             isLoadDialogOpen: false,
             isSaveDialogOpen: false,
             isDirty: false,
+            filterTerm: '',
         };
         this.onChange = this.onChange.bind(this);
         this.reloadFromFile = this.reloadFromFile.bind(this);
@@ -78,6 +79,7 @@ class App extends React.Component {
         this.onLoadPasswordInputChange = this.onLoadPasswordInputChange.bind(this);
         this.onSavePasswordInputChange = this.onSavePasswordInputChange.bind(this);
         this.onSavePasswordInputChange2 = this.onSavePasswordInputChange2.bind(this);
+        this.onFilterTermChange = this.onFilterTermChange.bind(this);
         this.handleClickOpenLoadDialog = this.handleClickOpenLoadDialog.bind(this);
         this.handleClickOpenSaveDialog = this.handleClickOpenSaveDialog.bind(this);
         this.handleCloseLoadDialog = this.handleCloseLoadDialog.bind(this);
@@ -148,6 +150,12 @@ class App extends React.Component {
     onSavePasswordInputChange2(event) {
         this.setState({
             savePassword2: event.target.value
+        });
+    }
+
+    onFilterTermChange(event) {
+        this.setState({
+            filterTerm: event.target.value
         });
     }
 
@@ -379,6 +387,13 @@ class App extends React.Component {
                                     </DialogActions>
                                 </form>
                             </Dialog>
+                        </Grid>
+                        <Grid item>
+                            <TextField
+                                label="Filter"
+                                onChange={this.onFilterTermChange}
+                                value={this.state.filterTerm}
+                            />
                         </Grid>
                         <Grid item>
                             <List>
