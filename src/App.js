@@ -251,7 +251,7 @@ class App extends React.Component {
     render() {
         const {classes} = this.props;
 
-        const listItems = this.state.passwords.map((item, index) => {
+        const listItems = this.state.passwords.map(item => {
             return (
                 <ListItem key={item.id} dense>
                     {item.id}
@@ -269,7 +269,7 @@ class App extends React.Component {
                                     <div><IconButton
                                         className={classes.iconButton}
                                         color="primary"
-                                        disabled={!this.state.passwords[index].username}>
+                                        disabled={!this.state.passwords.find(password => password.id === item.id).username}>
                                         <CopyIcon className={classes.icon}/>
                                     </IconButton></div>
                                 </Tooltip>
@@ -285,7 +285,7 @@ class App extends React.Component {
                                     <div><IconButton
                                         className={classes.iconButton}
                                         color="primary"
-                                        disabled={!this.state.passwords[index].password}
+                                        disabled={!this.state.passwords.find(password => password.id === item.id).password}
                                     >
                                         <CopyIcon className={classes.icon}/>
                                     </IconButton></div>
