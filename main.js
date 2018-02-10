@@ -78,7 +78,7 @@ function createWindow() {
     });
 
     ipcMain.on('generate-item-id', (event, item) => {
-        const string = JSON.stringify(item);
+        const string = item.service + item.username + item.password;
         event.returnValue = getHash(string);
     });
 

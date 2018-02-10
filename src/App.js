@@ -166,11 +166,12 @@ class App extends React.Component {
             this.setState((prevState) => {
                 const nextPasswords = prevState.passwords;
                 nextPasswords[index][fieldName] = value;
+                nextPasswords[index].id = ipcRenderer.sendSync('generate-item-id', nextPasswords[index]);
                 return {
                     passwords: nextPasswords,
                     isDirty: true,
                 };
-            })
+            });
         }
     }
 
@@ -200,24 +201,24 @@ class App extends React.Component {
 
     addRow() {
         this.setState((prevState) => {
+            const newPassword = {
+                service: '',
+                username: '',
+                password: '',
+            };
+            newPassword.id = ipcRenderer.sendSync('generate-item-id', newPassword);
             return {
-                passwords: [...prevState.passwords, {
-                    service: '',
-                    username: '',
-                    password: '',
-                }],
+                passwords: [...prevState.passwords, newPassword],
                 isDirty: true,
             };
         })
     }
 
-    deleteRow(index) {
+    deleteRow(id) {
         return () => {
             this.setState((prevState) => {
-                const temp = prevState.passwords;
-                temp.splice(index, 1);
                 return {
-                    passwords: temp,
+                    passwords: prevState.passwords.filter(password => password.id !== id),
                     isDirty: true,
                 };
             })
@@ -237,15 +238,16 @@ class App extends React.Component {
     render() {
         const {classes} = this.props;
 
-        const listItems = this.state.passwords.map((entry, index) => {
+        const listItems = this.state.passwords.map((item, index) => {
             return (
                 <ListItem key={index} dense>
+                    {item.id}
                     <Tooltip title="Delete row">
-                        <IconButton onClick={this.deleteRow(index)}><DeleteIcon/></IconButton>
+                        <IconButton onClick={this.deleteRow(item.id)}><DeleteIcon/></IconButton>
                     </Tooltip>
                     <Input
                         className={classes.textField}
-                        value={entry.service}
+                        value={item.service}
                         onChange={this.onChange(index, 'service')}/>
                     <Input
                         endAdornment={
@@ -261,7 +263,7 @@ class App extends React.Component {
                             </InputAdornment>
                         }
                         className={classes.textField}
-                        value={entry.username}
+                        value={item.username}
                         onChange={this.onChange(index, 'username')}/>
                     <Input
                         endAdornment={
@@ -278,7 +280,7 @@ class App extends React.Component {
                             </InputAdornment>
                         }
                         className={classes.textField}
-                        value={entry.password}
+                        value={item.password}
                         onChange={this.onChange(index, 'password')}/>
                 </ListItem>
             );
