@@ -75,6 +75,7 @@ class App extends React.Component {
             isSaveError: false,
             items: [],
             filteredItems: [],
+            fileExists: ipcRenderer.sendSync('get-file-exists'),
             isLoadDialogOpen: ipcRenderer.sendSync('get-file-exists'),
             isSaveDialogOpen: false,
             isDirty: false,
@@ -131,6 +132,7 @@ class App extends React.Component {
                 isSaveDialogOpen: false,
                 isSaveError: false,
                 isDirty: false,
+                fileExists: ipcRenderer.sendSync('get-file-exists')
             }, () => {
                 new Notification(APP_NAME, { body: `Items saved.` });
             });
@@ -290,6 +292,7 @@ class App extends React.Component {
                                 variant="raised"
                                 onClick={this.handleClickOpenLoadDialog}
                                 className={classes.button}
+                                disabled={!this.state.fileExists}
                             >
                                 <RestoreIcon className={classes.leftIcon}/>
                                 Reload from file
