@@ -4,7 +4,7 @@
 directory at `~/halberdier.aes`.
 
 # Installation
-* Download the [installer](https://github.com/a-n-d-r-3-w/halberdier/releases/download/v1.0.0/Halberdier-1.8.2.dmg)
+* Download the [installer](https://github.com/a-n-d-r-3-w/halberdier/releases/download/v1.0.0/Halberdier-1.0.0.dmg)
 * Double-click the DMG file to launch the installer
 * In the installer window, drag **Halberdier.app** to **Applications**
 
