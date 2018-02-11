@@ -182,19 +182,23 @@ class App extends React.Component {
     }
 
     addItem() {
-        this.setState((prevState) => {
-            const newItem = {
-                id: Date.now().toString(16),
-                service: '',
-                username: '',
-                password: ''
-            };
-            const newItems = [newItem, ...prevState.items];
-            return {
-                items: newItems,
-                filteredItems: App.filter(newItems, prevState.filterText),
-                isDirty: true,
-            };
+        this.setState({
+            filterText: ''
+        }, () => {
+            this.setState((prevState) => {
+                const newItem = {
+                    id: Date.now().toString(16),
+                    service: '',
+                    username: '',
+                    password: ''
+                };
+                const newItems = [newItem, ...prevState.items];
+                return {
+                    items: newItems,
+                    filteredItems: App.filter(newItems, prevState.filterText),
+                    isDirty: true,
+                };
+            });
         });
     }
 
