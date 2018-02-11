@@ -341,7 +341,10 @@ class App extends React.Component {
                                 onClose={this.handleCloseSaveDialog}
                                 aria-labelledby="save-dialog"
                             >
-                                <DialogTitle id="save-dialog">Save items to ~/halberdier.aes</DialogTitle>
+                                <DialogTitle id="save-dialog">
+                                    Save items to ~/halberdier.aes.
+                                    <Typography color="primary">All items will be overwritten.</Typography>
+                                </DialogTitle>
                                 <form onSubmit={this.saveChanges}>
                                     <DialogContent>
                                         <TextField
