@@ -21,6 +21,8 @@ import Dialog, {
 } from 'material-ui/Dialog';
 import Tooltip from 'material-ui/Tooltip';
 import {FormControl} from 'material-ui/Form';
+import VisibilityOnIcon from 'material-ui-icons/Visibility';
+import VisibilityOffIcon from 'material-ui-icons/VisibilityOff';
 
 import halberd from './halberd.png';
 
@@ -81,6 +83,7 @@ class App extends React.Component {
             isSaveDialogOpen: false,
             isDirty: false,
             filterText: '',
+            showPasswords: false,
         };
         this.onChange = this.onChange.bind(this);
         this.openFile = this.openFile.bind(this);
@@ -95,6 +98,7 @@ class App extends React.Component {
         this.handleClickOpenSaveDialog = this.handleClickOpenSaveDialog.bind(this);
         this.handleCloseLoadDialog = this.handleCloseLoadDialog.bind(this);
         this.handleCloseSaveDialog = this.handleCloseSaveDialog.bind(this);
+        this.toggleShowPasswords = this.toggleShowPasswords.bind(this);
     }
 
     handleClickOpenLoadDialog() {
@@ -226,6 +230,12 @@ class App extends React.Component {
         }
     }
 
+    toggleShowPasswords() {
+        this.setState(prevState => ({
+            showPasswords: !prevState.showPasswords
+        }));
+    }
+
     render() {
         const {classes} = this.props;
 
@@ -262,6 +272,7 @@ class App extends React.Component {
                     <FormControl className={classes.formControl}>
                         <InputLabel>Password</InputLabel>
                         <Input
+                            type={this.state.showPasswords ? "text" : "password"}
                             endAdornment={
                                 <InputAdornment position="end" onClick={this.copyField(item.id, 'password')}>
                                     <Tooltip title="Copy password">
@@ -401,7 +412,6 @@ class App extends React.Component {
                                             <SearchIcon className={classes.iconButton} />
                                         </InputAdornment>
                                     }
-                                    className={classes.textField}
                                     value={this.state.filterText}
                                     onChange={this.onFilterTextChange}/>
                             </Grid>
@@ -410,6 +420,16 @@ class App extends React.Component {
                             <Button variant="raised" onClick={this.addItem} className={classes.button}>
                                 <AddIcon className={classes.leftIcon}/>
                                 Add row
+                            </Button>
+                            <Button variant="raised" onClick={this.toggleShowPasswords} className={classes.button}>
+                                {
+                                    this.state.showPasswords ?
+                                    <VisibilityOffIcon className={classes.leftIcon}/> :
+                                    <VisibilityOnIcon className={classes.leftIcon}/>
+                                }
+                                {
+                                    this.state.showPasswords ? "Hide passwords" : "Show passwords"
+                                }
                             </Button>
                         </Grid>
                         <Grid item>
