@@ -9,8 +9,8 @@ directory at `~/halberdier.aes`.
 * In the installer window, drag **Halberdier.app** to **Applications**
 
 # Getting started
-* Select **Launchpad > Halberdier**
-* Click **Add item**
+* Launch Halberdier by selecting **Launchpad > Halberdier**
+* In Halberdier, click **Add item**
 * Fill in the text fields for **Service**, **Username** and **Password**
   * For example:
     * Service: Google
@@ -20,5 +20,6 @@ directory at `~/halberdier.aes`.
 * Click **Save** to open the save dialog
 * Enter a master password twice and click **Save**
   * This saves your passwords in an encrypted file in your home directory named `halberdier.aes`
+* To quit Halberdier, press Command+q
 * The next time you launch **halberdier**, it will immediately prompt you to enter your master password in order to 
   load your passwords
