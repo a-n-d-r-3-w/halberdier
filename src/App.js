@@ -397,15 +397,15 @@ class App extends React.Component {
                             </Grid>
                         }
                         <Grid item>
-                            <List>
-                                {listItems}
-                            </List>
-                        </Grid>
-                        <Grid item>
                             <Button variant="raised" onClick={this.addItem} className={classes.button}>
                                 <AddIcon className={classes.leftIcon}/>
                                 Add row
                             </Button>
+                        </Grid>
+                        <Grid item>
+                            <List>
+                                {listItems}
+                            </List>
                         </Grid>
                     </Grid>
                 </Paper>
