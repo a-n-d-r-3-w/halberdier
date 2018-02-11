@@ -6,7 +6,7 @@ import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
 import SaveIcon from 'material-ui-icons/Save';
 import AddIcon from 'material-ui-icons/Add';
-import FolderOpenIcon from 'material-ui-icons/FolderOpen';
+import RestoreIcon from 'material-ui-icons/Restore';
 import SearchIcon from 'material-ui-icons/Search';
 import TextField from 'material-ui/TextField';
 import Grid from 'material-ui/Grid';
@@ -291,8 +291,8 @@ class App extends React.Component {
                                 onClick={this.handleClickOpenLoadDialog}
                                 className={classes.button}
                             >
-                                <FolderOpenIcon className={classes.leftIcon}/>
-                                Open
+                                <RestoreIcon className={classes.leftIcon}/>
+                                Reload from file
                             </Button>
                             <Dialog
                                 open={this.state.isLoadDialogOpen}
