@@ -25,13 +25,13 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
-    "electron": "~1.7.8",
+    "electron": "^1.7.12",
     "file-loader": "^1.1.6",
-    "webpack": "^3.10.0",
+    "webpack": "^3.11.0",
     "webpack-dev-server": "^2.11.1"
   },
   "dependencies": {
-    "material-ui": "^1.0.0-beta.32",
+    "material-ui": "^1.0.0-beta.33",
     "material-ui-icons": "^1.0.0-beta.17",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
