@@ -58,6 +58,12 @@ const styles = theme => ({
 const {ipcRenderer} = require('electron');
 
 class App extends React.Component {
+
+    static filter(items, filterText) {
+        const filterFn = item => item.service.toLowerCase().indexOf(filterText) !== -1;
+        return items.filter(filterFn);
+    }
+
     constructor(props) {
         // noinspection JSCheckFunctionSignatures
         super(props);
@@ -87,17 +93,7 @@ class App extends React.Component {
         this.handleClickOpenSaveDialog = this.handleClickOpenSaveDialog.bind(this);
         this.handleCloseLoadDialog = this.handleCloseLoadDialog.bind(this);
         this.handleCloseSaveDialog = this.handleCloseSaveDialog.bind(this);
-        this.updateFilteredItems = this.updateFilteredItems.bind(this);
     }
-
-    updateFilteredItems() {
-        this.setState(prevState => {
-            const filterFn = password => password.service.toLowerCase().indexOf(prevState.filterText) !== -1;
-            return {
-                filteredItems: prevState.items.filter(filterFn)
-            };
-        });
-    };
 
     handleClickOpenLoadDialog() {
         this.setState({ isLoadDialogOpen: true });
@@ -116,14 +112,14 @@ class App extends React.Component {
     };
 
     componentWillMount() {
-        ipcRenderer.on('load-success', (event, state) => {
-            this.setState({
-                items: state.items,
+        ipcRenderer.on('load-success', (event, loadedData) => {
+            this.setState(prevState => ({
+                items: loadedData.items,
+                filteredItems: App.filter(loadedData.items, prevState.filterText),
                 isLoadDialogOpen: false,
                 isLoadError: false,
                 isDirty: false,
-            }, () => {
-                this.updateFilteredItems();
+            }), () => {
                 new Notification(APP_NAME, {body: `Items loaded.`});
             });
         });
@@ -150,9 +146,11 @@ class App extends React.Component {
     onSavePasswordInputChange2(event) { this.setState({ savePassword2: event.target.value }); }
 
     onFilterTextChange(event) {
-        this.setState({
-            filterText: event.target.value.toLowerCase()
-        }, this.updateFilteredItems);
+        const filterText = event.target.value.toLowerCase();
+        this.setState(prevState => ({
+            filterText,
+            filteredItems: App.filter(prevState.items, filterText)
+        }));
     }
 
     onChange(id, fieldName) {
@@ -163,9 +161,10 @@ class App extends React.Component {
                 nextItems.find(item => item.id === id)[fieldName] = value;
                 return {
                     items: nextItems,
+                    filteredItems: App.filter(nextItems, prevState.filterText),
                     isDirty: true
                 };
-            }, this.updateFilteredItems);
+            });
         }
     }
 
@@ -190,21 +189,25 @@ class App extends React.Component {
                 username: '',
                 password: ''
             };
+            const newItems = [...prevState.items, newItem];
             return {
-                items: [...prevState.items, newItem],
+                items: newItems,
+                filteredItems: App.filter(newItems, prevState.filterText),
                 isDirty: true,
             };
-        }, this.updateFilteredItems);
+        });
     }
 
     deleteItem(id) {
         return () => {
             this.setState((prevState) => {
+                const newItems = prevState.items.filter(item => item.id !== id);
                 return {
-                    items: prevState.items.filter(item => item.id !== id),
+                    items: newItems,
+                    filteredItems: App.filter(newItems, prevState.filterText),
                     isDirty: true,
                 };
-            }, this.updateFilteredItems);
+            });
         };
     }
 
