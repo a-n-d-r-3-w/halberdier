@@ -10,7 +10,7 @@ import RestoreIcon from 'material-ui-icons/Restore';
 import SearchIcon from 'material-ui-icons/Search';
 import TextField from 'material-ui/TextField';
 import Grid from 'material-ui/Grid';
-import Input, {InputAdornment} from 'material-ui/Input';
+import Input, {InputLabel, InputAdornment} from 'material-ui/Input';
 import CopyIcon from 'material-ui-icons/ContentCopy';
 import List, {ListItem} from 'material-ui/List';
 import Typography from 'material-ui/Typography';
@@ -20,6 +20,7 @@ import Dialog, {
     DialogTitle,
 } from 'material-ui/Dialog';
 import Tooltip from 'material-ui/Tooltip';
+import {FormControl} from 'material-ui/Form';
 
 import halberd from './halberd.png';
 
@@ -43,7 +44,7 @@ const styles = theme => ({
     leftIcon: {
         marginRight: theme.spacing.unit,
     },
-    textField: {
+    formControl: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit
     },
@@ -234,43 +235,49 @@ class App extends React.Component {
                     <Tooltip title="Delete row">
                         <IconButton onClick={this.deleteItem(item.id)}><DeleteIcon/></IconButton>
                     </Tooltip>
-                    <Input
-                        className={classes.textField}
-                        value={item.service}
-                        onChange={this.onChange(item.id, 'service')}/>
-                    <Input
-                        endAdornment={
-                            <InputAdornment position="end" onClick={this.copyField(item.id, 'username')}>
-                                <Tooltip title="Copy username">
-                                    <div><IconButton
-                                        className={classes.iconButton}
-                                        color="primary"
-                                        disabled={!this.state.items.find(password => password.id === item.id).username}>
-                                        <CopyIcon className={classes.icon}/>
-                                    </IconButton></div>
-                                </Tooltip>
-                            </InputAdornment>
-                        }
-                        className={classes.textField}
-                        value={item.username}
-                        onChange={this.onChange(item.id, 'username')}/>
-                    <Input
-                        endAdornment={
-                            <InputAdornment position="end" onClick={this.copyField(item.id, 'password')}>
-                                <Tooltip title="Copy password">
-                                    <div><IconButton
-                                        className={classes.iconButton}
-                                        color="primary"
-                                        disabled={!this.state.items.find(password => password.id === item.id).password}
-                                    >
-                                        <CopyIcon className={classes.icon}/>
-                                    </IconButton></div>
-                                </Tooltip>
-                            </InputAdornment>
-                        }
-                        className={classes.textField}
-                        value={item.password}
-                        onChange={this.onChange(item.id, 'password')}/>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel>Name</InputLabel>
+                        <Input
+                            value={item.service}
+                            onChange={this.onChange(item.id, 'service')}/>
+                    </FormControl>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel>Username</InputLabel>
+                        <Input
+                            endAdornment={
+                                <InputAdornment position="end" onClick={this.copyField(item.id, 'username')}>
+                                    <Tooltip title="Copy username">
+                                        <div><IconButton
+                                            className={classes.iconButton}
+                                            color="primary"
+                                            disabled={!this.state.items.find(password => password.id === item.id).username}>
+                                            <CopyIcon className={classes.icon}/>
+                                        </IconButton></div>
+                                    </Tooltip>
+                                </InputAdornment>
+                            }
+                            value={item.username}
+                            onChange={this.onChange(item.id, 'username')}/>
+                    </FormControl>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel>Password</InputLabel>
+                        <Input
+                            endAdornment={
+                                <InputAdornment position="end" onClick={this.copyField(item.id, 'password')}>
+                                    <Tooltip title="Copy password">
+                                        <div><IconButton
+                                            className={classes.iconButton}
+                                            color="primary"
+                                            disabled={!this.state.items.find(password => password.id === item.id).password}
+                                        >
+                                            <CopyIcon className={classes.icon}/>
+                                        </IconButton></div>
+                                    </Tooltip>
+                                </InputAdornment>
+                            }
+                            value={item.password}
+                            onChange={this.onChange(item.id, 'password')}/>
+                    </FormControl>
                 </ListItem>
             );
         });
