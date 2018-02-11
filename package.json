@@ -1,22 +1,23 @@
 {
-  "name": "electron-quick-start",
+  "name": "halberdier",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "A local password manager for Mac",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "build": "webpack --watch"
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/a-n-d-r-3-w/halberdier"
+  },
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "local",
+    "password",
+    "manager"
   ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
+  "author": "andr3w",
+  "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
