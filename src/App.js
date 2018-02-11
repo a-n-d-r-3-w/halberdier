@@ -189,7 +189,7 @@ class App extends React.Component {
                 username: '',
                 password: ''
             };
-            const newItems = [...prevState.items, newItem];
+            const newItems = [newItem, ...prevState.items];
             return {
                 items: newItems,
                 filteredItems: App.filter(newItems, prevState.filterText),
