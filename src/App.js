@@ -382,6 +382,7 @@ class App extends React.Component {
                             (this.state.items.length !== 0) && <Grid item >
                                 <Input
                                     placeholder="Filter"
+                                    type="search"
                                     startAdornment={
                                         <InputAdornment position="start">
                                             <SearchIcon className={classes.iconButton} />
