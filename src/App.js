@@ -81,7 +81,7 @@ class App extends React.Component {
             filterText: '',
         };
         this.onChange = this.onChange.bind(this);
-        this.reloadFromFile = this.reloadFromFile.bind(this);
+        this.openFile = this.openFile.bind(this);
         this.saveChanges = this.saveChanges.bind(this);
         this.addItem = this.addItem.bind(this);
         this.deleteItem = this.deleteItem.bind(this);
@@ -168,7 +168,7 @@ class App extends React.Component {
         }
     }
 
-    reloadFromFile(event) {
+    openFile(event) {
         if (event) { event.preventDefault(); }
         ipcRenderer.send('get-items', this.state.loadPassword);
         this.setState({ loadPassword: '' });
@@ -300,7 +300,7 @@ class App extends React.Component {
                                 aria-labelledby="load-dialog"
                             >
                                 <DialogTitle id="load-dialog">Load items from ~/halberdier.aes</DialogTitle>
-                                <form onSubmit={this.reloadFromFile}>
+                                <form onSubmit={this.openFile}>
                                     <DialogContent>
                                             <TextField
                                                 autoFocus
