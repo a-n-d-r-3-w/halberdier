@@ -45,13 +45,13 @@ function createWindow() {
     }));
 
     // Open the DevTools.
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
 
     ipcMain.on('get-items', (event, loadPassword) => {
-        const fromFile = fs.readFileSync(itemsFilePath, 'utf8');
-        let decrypted;
-        let json;
         try {
+            const fromFile = fs.readFileSync(itemsFilePath, 'utf8');
+            let decrypted;
+            let json;
             decrypted = decrypt(fromFile, loadPassword);
             json = JSON.parse(decrypted);
             event.sender.send('load-success', json)
@@ -68,6 +68,14 @@ function createWindow() {
             event.sender.send('save-success');
         } catch (error) {
             event.sender.send('save-error');
+        }
+    });
+
+    ipcMain.on('get-file-exists', (event) => {
+        try {
+            event.returnValue = fs.existsSync(itemsFilePath);
+        } catch (error) {
+            event.returnValue = false;
         }
     });
 

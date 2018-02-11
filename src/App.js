@@ -75,7 +75,7 @@ class App extends React.Component {
             isSaveError: false,
             items: [],
             filteredItems: [],
-            isLoadDialogOpen: false,
+            isLoadDialogOpen: ipcRenderer.sendSync('get-file-exists'),
             isSaveDialogOpen: false,
             isDirty: false,
             filterText: '',
@@ -343,7 +343,7 @@ class App extends React.Component {
                             >
                                 <DialogTitle id="save-dialog">
                                     Save items to ~/halberdier.aes.
-                                    <Typography color="primary">All items will be overwritten.</Typography>
+                                    <Typography color="primary">File will be overwritten if it exists.</Typography>
                                 </DialogTitle>
                                 <form onSubmit={this.saveChanges}>
                                     <DialogContent>
