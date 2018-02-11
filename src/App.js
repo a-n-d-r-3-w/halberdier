@@ -100,7 +100,7 @@ class App extends React.Component {
     };
 
     handleCloseLoadDialog() {
-        this.setState({ isLoadDialogOpen: false });
+        this.setState({ isLoadDialogOpen: false, loadPassword: '' });
     };
 
     handleClickOpenSaveDialog() {
@@ -108,7 +108,7 @@ class App extends React.Component {
     };
 
     handleCloseSaveDialog() {
-        this.setState({ isSaveDialogOpen: false });
+        this.setState({ isSaveDialogOpen: false, savePassword: '', savePassword2: '' });
     };
 
     componentWillMount() {
