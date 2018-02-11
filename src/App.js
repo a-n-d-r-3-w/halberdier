@@ -382,11 +382,9 @@ class App extends React.Component {
                             (this.state.items.length !== 0) && <Grid item >
                                 <Input
                                     placeholder="Filter"
-                                    endAdornment={
-                                        <InputAdornment position="end">
-                                            <SearchIcon className={classes.iconButton}>
-                                                <CopyIcon className={classes.icon}/>
-                                            </SearchIcon>
+                                    startAdornment={
+                                        <InputAdornment position="start">
+                                            <SearchIcon className={classes.iconButton} />
                                         </InputAdornment>
                                     }
                                     className={classes.textField}
