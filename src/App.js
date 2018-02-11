@@ -67,8 +67,8 @@ class App extends React.Component {
             savePassword2: '',
             isLoadError: false,
             isSaveError: false,
-            passwords: [],
-            filteredPasswords: [],
+            items: [],
+            filteredItems: [],
             isLoadDialogOpen: false,
             isSaveDialogOpen: false,
             isDirty: false,
@@ -77,8 +77,8 @@ class App extends React.Component {
         this.onChange = this.onChange.bind(this);
         this.reloadFromFile = this.reloadFromFile.bind(this);
         this.saveChanges = this.saveChanges.bind(this);
-        this.addRow = this.addRow.bind(this);
-        this.deleteRow = this.deleteRow.bind(this);
+        this.addItem = this.addItem.bind(this);
+        this.deleteItem = this.deleteItem.bind(this);
         this.onLoadPasswordInputChange = this.onLoadPasswordInputChange.bind(this);
         this.onSavePasswordInputChange = this.onSavePasswordInputChange.bind(this);
         this.onSavePasswordInputChange2 = this.onSavePasswordInputChange2.bind(this);
@@ -87,16 +87,14 @@ class App extends React.Component {
         this.handleClickOpenSaveDialog = this.handleClickOpenSaveDialog.bind(this);
         this.handleCloseLoadDialog = this.handleCloseLoadDialog.bind(this);
         this.handleCloseSaveDialog = this.handleCloseSaveDialog.bind(this);
-        this.updateFilteredPasswords = this.updateFilteredPasswords.bind(this);
+        this.updateFilteredItems = this.updateFilteredItems.bind(this);
     }
 
-    updateFilteredPasswords() {
+    updateFilteredItems() {
         this.setState(prevState => {
             const filterFn = password => password.service.toLowerCase().indexOf(prevState.filterText) !== -1;
-            const filteredPasswords = prevState.passwords.filter(filterFn);
-            console.log(filteredPasswords.map(password => (password.service)));
             return {
-                filteredPasswords
+                filteredItems: prevState.items.filter(filterFn)
             };
         });
     };
@@ -120,19 +118,17 @@ class App extends React.Component {
     componentWillMount() {
         ipcRenderer.on('load-success', (event, state) => {
             this.setState({
-                passwords: state.passwords,
+                items: state.items,
                 isLoadDialogOpen: false,
                 isLoadError: false,
                 isDirty: false,
             }, () => {
-                new Notification(APP_NAME, {body: `Passwords loaded.`});
+                this.updateFilteredItems();
+                new Notification(APP_NAME, {body: `Items loaded.`});
             });
         });
-        ipcRenderer.on('load-error', () => {
-            this.setState({
-                isLoadError: true,
-            });
-        });
+
+        ipcRenderer.on('load-error', () => { this.setState({ isLoadError: true }); });
 
         ipcRenderer.on('save-success', () => {
             this.setState({
@@ -140,123 +136,94 @@ class App extends React.Component {
                 isSaveError: false,
                 isDirty: false,
             }, () => {
-                new Notification(APP_NAME, {body: `Passwords saved.`});
+                new Notification(APP_NAME, { body: `Items saved.` });
             });
         });
-        ipcRenderer.on('save-error', () => {
-            this.setState({
-                isSaveError: true,
-            });
-        })
+
+        ipcRenderer.on('save-error', () => { this.setState({ isSaveError: true }); });
     }
 
-    onLoadPasswordInputChange(event) {
-        this.setState({
-            loadPassword: event.target.value
-        });
-    }
+    onLoadPasswordInputChange(event) { this.setState({ loadPassword: event.target.value }); }
 
-    onSavePasswordInputChange(event) {
-        this.setState({
-            savePassword: event.target.value
-        });
-    }
+    onSavePasswordInputChange(event) { this.setState({ savePassword: event.target.value }); }
 
-    onSavePasswordInputChange2(event) {
-        this.setState({
-            savePassword2: event.target.value
-        });
-    }
+    onSavePasswordInputChange2(event) { this.setState({ savePassword2: event.target.value }); }
 
     onFilterTextChange(event) {
         this.setState({
             filterText: event.target.value.toLowerCase()
-        }, this.updateFilteredPasswords);
+        }, this.updateFilteredItems);
     }
 
     onChange(id, fieldName) {
         return (event) => {
             const value = event.target.value;
             this.setState((prevState) => {
-                const nextPasswords = prevState.passwords;
-                nextPasswords.find(password => password.id === id)[fieldName] = value;
+                const nextItems = prevState.items;
+                nextItems.find(item => item.id === id)[fieldName] = value;
                 return {
-                    passwords: nextPasswords,
-                    isDirty: true,
+                    items: nextItems,
+                    isDirty: true
                 };
-            });
+            }, this.updateFilteredItems);
         }
     }
 
     reloadFromFile(event) {
-        if (event) {
-            event.preventDefault();
-        }
-        ipcRenderer.send('get-passwords', this.state.loadPassword);
-        this.setState({
-            loadPassword: '',
-        });
+        if (event) { event.preventDefault(); }
+        ipcRenderer.send('get-items', this.state.loadPassword);
+        this.setState({ loadPassword: '' });
     }
 
     saveChanges(event) {
-        if (event) {
-            event.preventDefault();
-        }
-        const toSave = {
-            passwords: this.state.passwords
-        };
+        if (event) { event.preventDefault(); }
+        const toSave = { items: this.state.items };
         ipcRenderer.send('save-changes', toSave, this.state.savePassword);
-        this.setState({
-            savePassword: '',
-            savePassword2: '',
-        });
+        this.setState({ savePassword: '', savePassword2: '' });
     }
 
-    addRow() {
+    addItem() {
         this.setState((prevState) => {
-            const newPassword = {
+            const newItem = {
+                id: Date.now().toString(16),
                 service: '',
                 username: '',
-                password: '',
+                password: ''
             };
-            newPassword.id = Date.now().toString(16);
             return {
-                passwords: [...prevState.passwords, newPassword],
+                items: [...prevState.items, newItem],
                 isDirty: true,
             };
-        })
+        }, this.updateFilteredItems);
     }
 
-    deleteRow(id) {
+    deleteItem(id) {
         return () => {
             this.setState((prevState) => {
                 return {
-                    passwords: prevState.passwords.filter(password => password.id !== id),
+                    items: prevState.items.filter(item => item.id !== id),
                     isDirty: true,
                 };
-            })
-        }
+            }, this.updateFilteredItems);
+        };
     }
 
     copyField(id, fieldName) {
         return () => {
-            clipboard.writeText(this.state.passwords.find(password => password.id === id)[fieldName]);
+            clipboard.writeText(this.state.items.find(password => password.id === id)[fieldName]);
             new Notification(APP_NAME, {body: `Copied ${fieldName}. Clipboard will be cleared in 20 seconds.`});
-            setTimeout(() => {
-                clipboard.clear();
-            }, 20000);
+            setTimeout(() => { clipboard.clear(); }, 20000);
         }
     }
 
     render() {
         const {classes} = this.props;
 
-        const listItems = this.state.passwords.map(item => {
+        const listItems = this.state.filteredItems.map(item => {
             return (
                 <ListItem key={item.id} dense>
-                    {item.id}
                     <Tooltip title="Delete row">
-                        <IconButton onClick={this.deleteRow(item.id)}><DeleteIcon/></IconButton>
+                        <IconButton onClick={this.deleteItem(item.id)}><DeleteIcon/></IconButton>
                     </Tooltip>
                     <Input
                         className={classes.textField}
@@ -269,7 +236,7 @@ class App extends React.Component {
                                     <div><IconButton
                                         className={classes.iconButton}
                                         color="primary"
-                                        disabled={!this.state.passwords.find(password => password.id === item.id).username}>
+                                        disabled={!this.state.items.find(password => password.id === item.id).username}>
                                         <CopyIcon className={classes.icon}/>
                                     </IconButton></div>
                                 </Tooltip>
@@ -285,7 +252,7 @@ class App extends React.Component {
                                     <div><IconButton
                                         className={classes.iconButton}
                                         color="primary"
-                                        disabled={!this.state.passwords.find(password => password.id === item.id).password}
+                                        disabled={!this.state.items.find(password => password.id === item.id).password}
                                     >
                                         <CopyIcon className={classes.icon}/>
                                     </IconButton></div>
@@ -325,7 +292,7 @@ class App extends React.Component {
                                 onClose={this.handleCloseLoadDialog}
                                 aria-labelledby="load-dialog"
                             >
-                                <DialogTitle id="load-dialog">Load passwords from ~/passwords.json</DialogTitle>
+                                <DialogTitle id="load-dialog">Load items from ~/halberdier.aes</DialogTitle>
                                 <form onSubmit={this.reloadFromFile}>
                                     <DialogContent>
                                             <TextField
@@ -357,7 +324,7 @@ class App extends React.Component {
                                 variant="raised"
                                 onClick={this.handleClickOpenSaveDialog}
                                 className={classes.button}
-                                disabled={this.state.passwords.length === 0 || !this.state.isDirty}
+                                disabled={this.state.items.length === 0 || !this.state.isDirty}
                             >
                                 <SaveIcon className={classes.leftIcon}/>
                                 Save
@@ -367,7 +334,7 @@ class App extends React.Component {
                                 onClose={this.handleCloseSaveDialog}
                                 aria-labelledby="save-dialog"
                             >
-                                <DialogTitle id="save-dialog">Save passwords to ~/passwords.json</DialogTitle>
+                                <DialogTitle id="save-dialog">Save items to ~/halberdier.aes</DialogTitle>
                                 <form onSubmit={this.saveChanges}>
                                     <DialogContent>
                                         <TextField
@@ -405,7 +372,7 @@ class App extends React.Component {
                             </Dialog>
                         </Grid>
                         {
-                            (this.state.passwords.length !== 0) && <Grid item >
+                            (this.state.items.length !== 0) && <Grid item >
                                 <Input
                                     placeholder="Filter"
                                     endAdornment={
@@ -426,7 +393,7 @@ class App extends React.Component {
                             </List>
                         </Grid>
                         <Grid item>
-                            <Button variant="raised" onClick={this.addRow} className={classes.button}>
+                            <Button variant="raised" onClick={this.addItem} className={classes.button}>
                                 <AddIcon className={classes.leftIcon}/>
                                 Add row
                             </Button>

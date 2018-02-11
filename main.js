@@ -13,7 +13,7 @@ const crypto = require('crypto');
 
 const os = require('os');
 
-const passwordsFilePath = os.homedir() + "/passwords.json";
+const itemsFilePath = os.homedir() + "/halberdier.aes";
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -47,8 +47,8 @@ function createWindow() {
     // Open the DevTools.
     mainWindow.webContents.openDevTools();
 
-    ipcMain.on('get-passwords', (event, loadPassword) => {
-        const fromFile = fs.readFileSync(passwordsFilePath, 'utf8');
+    ipcMain.on('get-items', (event, loadPassword) => {
+        const fromFile = fs.readFileSync(itemsFilePath, 'utf8');
         let decrypted;
         let json;
         try {
@@ -64,7 +64,7 @@ function createWindow() {
         try {
             const string = JSON.stringify(state);
             const encrypted = encrypt(string, savePassword);
-            fs.writeFileSync(passwordsFilePath, encrypted);
+            fs.writeFileSync(itemsFilePath, encrypted);
             event.sender.send('save-success');
         } catch (error) {
             event.sender.send('save-error');
