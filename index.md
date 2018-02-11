@@ -2,12 +2,10 @@
 **Halberdier** is a password manager for Mac that stores your passwords in an encrypted file located in your home
 directory at `~/halberdier.aes`.
 
-Screenshot
-
 # Installation
-* Download the DMG file
-* Double-click the DMG file
-* Drag its contents into the Applications folder
+* Download the [installer](https://github.com/a-n-d-r-3-w/halberdier/releases/download/v1.0.0/Halberdier-1.8.2.dmg)
+* Double-click the DMG file to launch the installer
+* In the installer window, drag Halberdier.app to Applications
 
 # Getting started
 * Select **Launchpad > Halberdier**
