@@ -13,7 +13,7 @@ const crypto = require('crypto');
 
 const os = require('os');
 
-const itemsFilePath = os.homedir() + "/halberdier.aes";
+const ITEMS_FILE_PATH = os.homedir() + "/Dropbox/halberdier.aes";
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -49,7 +49,7 @@ function createWindow() {
 
     ipcMain.on('get-items', (event, loadPassword) => {
         try {
-            const fromFile = fs.readFileSync(itemsFilePath, 'utf8');
+            const fromFile = fs.readFileSync(ITEMS_FILE_PATH, 'utf8');
             let decrypted;
             let json;
             decrypted = decrypt(fromFile, loadPassword);
@@ -64,7 +64,7 @@ function createWindow() {
         try {
             const string = JSON.stringify(state);
             const encrypted = encrypt(string, savePassword);
-            fs.writeFileSync(itemsFilePath, encrypted);
+            fs.writeFileSync(ITEMS_FILE_PATH, encrypted);
             event.sender.send('save-success');
         } catch (error) {
             event.sender.send('save-error');
@@ -73,7 +73,7 @@ function createWindow() {
 
     ipcMain.on('get-file-exists', (event) => {
         try {
-            event.returnValue = fs.existsSync(itemsFilePath);
+            event.returnValue = fs.existsSync(ITEMS_FILE_PATH);
         } catch (error) {
             event.returnValue = false;
         }

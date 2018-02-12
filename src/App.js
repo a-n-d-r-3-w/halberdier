@@ -320,7 +320,7 @@ class App extends React.Component {
                                 onClose={this.handleCloseLoadDialog}
                                 aria-labelledby="load-dialog"
                             >
-                                <DialogTitle id="load-dialog">Load items from ~/halberdier.aes</DialogTitle>
+                                <DialogTitle id="load-dialog">Load items from ~/Dropbox/halberdier.aes</DialogTitle>
                                 <form onSubmit={this.openFile}>
                                     <DialogContent>
                                             <TextField
@@ -363,7 +363,7 @@ class App extends React.Component {
                                 aria-labelledby="save-dialog"
                             >
                                 <DialogTitle id="save-dialog">
-                                    Save items to ~/halberdier.aes.
+                                    Save items to ~/Dropbox/halberdier.aes.
                                     <Typography color="primary">File will be overwritten if it exists.</Typography>
                                 </DialogTitle>
                                 <form onSubmit={this.saveChanges}>
