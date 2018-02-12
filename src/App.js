@@ -82,6 +82,7 @@ class App extends React.Component {
             fileExists: ipcRenderer.sendSync('get-file-exists'),
             isLoadDialogOpen: ipcRenderer.sendSync('get-file-exists'),
             isSaveDialogOpen: false,
+            isUpdatePasswordDialogOpen: false,
             isDirty: false,
             filterText: '',
             showPasswords: false,
@@ -97,8 +98,10 @@ class App extends React.Component {
         this.onFilterTextChange = this.onFilterTextChange.bind(this);
         this.handleClickReloadButton = this.handleClickReloadButton.bind(this);
         this.handleClickSaveButton = this.handleClickSaveButton.bind(this);
+        this.handleClickUpdatePasswordButton = this.handleClickUpdatePasswordButton.bind(this);
         this.handleCloseLoadDialog = this.handleCloseLoadDialog.bind(this);
         this.handleCloseSaveDialog = this.handleCloseSaveDialog.bind(this);
+        this.handleCloseUpdatePasswordDialog = this.handleCloseUpdatePasswordDialog.bind(this);
         this.toggleShowPasswords = this.toggleShowPasswords.bind(this);
     }
 
@@ -130,6 +133,14 @@ class App extends React.Component {
         this.setState({ isSaveDialogOpen: false, savePassword: '', savePassword2: '' });
     };
 
+    handleClickUpdatePasswordButton() {
+        this.setState({ isUpdatePasswordDialogOpen: true });
+    }
+
+    handleCloseUpdatePasswordDialog() {
+        this.setState({ isUpdatePasswordDialogOpen: false, savePassword: '', savePassword2: '' });
+    };
+
     componentWillMount() {
         ipcRenderer.on('load-success', (event, loadedData) => {
             this.setState(prevState => ({
@@ -149,6 +160,7 @@ class App extends React.Component {
         ipcRenderer.on('save-success', () => {
             this.setState({
                 isSaveDialogOpen: false,
+                isUpdatePasswordDialogOpen: false,
                 isSaveError: false,
                 isDirty: false,
                 fileExists: ipcRenderer.sendSync('get-file-exists')
@@ -324,7 +336,7 @@ class App extends React.Component {
                                 variant="raised"
                                 onClick={this.handleClickReloadButton}
                                 className={classes.button}
-                                disabled={!this.state.fileExists}
+                                disabled={!this.state.fileExists || !this.state.isDirty}
                             >
                                 <RestoreIcon className={classes.leftIcon}/>
                                 Reload from file
@@ -362,6 +374,7 @@ class App extends React.Component {
                                     </DialogActions>
                                 </form>
                             </Dialog>
+
                             <Button
                                 variant="raised"
                                 onClick={this.handleClickSaveButton}
@@ -369,7 +382,7 @@ class App extends React.Component {
                                 disabled={this.state.items.length === 0 || !this.state.isDirty}
                             >
                                 <SaveIcon className={classes.leftIcon}/>
-                                Save
+                                Save changes
                             </Button>
                             <Dialog
                                 open={this.state.isSaveDialogOpen}
@@ -403,6 +416,60 @@ class App extends React.Component {
                                     <DialogActions>
                                         <Button
                                             onClick={this.handleCloseSaveDialog}
+                                            color="primary">
+                                            Cancel
+                                        </Button>
+                                        <Button
+                                            disabled={!this.state.savePassword || (this.state.savePassword !== this.state.savePassword2)}
+                                            type="submit"
+                                            color="primary">
+                                            Save
+                                        </Button>
+                                    </DialogActions>
+                                </form>
+                            </Dialog>
+                            
+                            <Button
+                                variant="raised"
+                                onClick={this.handleClickUpdatePasswordButton}
+                                className={classes.button}
+                                disabled={this.state.items.length === 0 || !this.state.fileExists}
+                            >
+                                <SaveIcon className={classes.leftIcon}/>
+                                Save with new master password
+                            </Button>
+                            <Dialog
+                                open={this.state.isUpdatePasswordDialogOpen}
+                                onClose={this.handleCloseUpdatePasswordDialog}
+                                aria-labelledby="save-dialog"
+                            >
+                                <DialogTitle id="save-dialog">
+                                    Update password for ~/Dropbox/halberdier.dat.
+                                    <Typography color="primary">File will be overwritten.</Typography>
+                                </DialogTitle>
+                                <form onSubmit={this.saveChanges}>
+                                    <DialogContent>
+                                        <TextField
+                                            autoFocus
+                                            fullWidth
+                                            type="password"
+                                            label="Master password"
+                                            onChange={this.onSavePasswordInputChange}
+                                            value={this.state.savePassword}
+                                            error={this.state.isSaveError}
+                                        />
+                                        <TextField
+                                            fullWidth
+                                            type="password"
+                                            label="Confirm master password"
+                                            onChange={this.onSavePasswordInputChange2}
+                                            value={this.state.savePassword2}
+                                            error={this.state.isSaveError}
+                                        />
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button
+                                            onClick={this.handleCloseUpdatePasswordDialog}
                                             color="primary">
                                             Cancel
                                         </Button>
