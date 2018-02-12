@@ -74,6 +74,7 @@ class App extends React.Component {
             loadPassword: '',
             savePassword: '',
             savePassword2: '',
+            masterPassword: '',
             isLoadError: false,
             isSaveError: false,
             items: [],
@@ -102,6 +103,12 @@ class App extends React.Component {
     }
 
     handleClickOpenLoadDialog() {
+        if (this.state.masterPassword) {
+            this.setState(prevState => ({
+                loadPassword: prevState.masterPassword
+            }), this.openFile);
+            return;
+        }
         this.setState({ isLoadDialogOpen: true });
     };
 
@@ -110,6 +117,12 @@ class App extends React.Component {
     };
 
     handleClickOpenSaveDialog() {
+        if (this.state.masterPassword) {
+            this.setState(prevState => ({
+                savePassword: prevState.masterPassword
+            }), this.saveChanges);
+            return;
+        }
         this.setState({ isSaveDialogOpen: true });
     };
 
@@ -125,6 +138,7 @@ class App extends React.Component {
                 isLoadDialogOpen: false,
                 isLoadError: false,
                 isDirty: false,
+                masterPassword: loadedData.masterPassword,
             }), () => {
                 new Notification(APP_NAME, {body: `Items loaded.`});
             });

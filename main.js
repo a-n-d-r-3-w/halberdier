@@ -54,6 +54,7 @@ function createWindow() {
             let json;
             decrypted = decrypt(fromFile, loadPassword);
             json = JSON.parse(decrypted);
+            json.masterPassword = loadPassword;
             event.sender.send('load-success', json)
         } catch (error) {
             event.sender.send('load-error')
