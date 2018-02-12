@@ -13,7 +13,7 @@ const crypto = require('crypto');
 
 const os = require('os');
 
-const ITEMS_FILE_PATH = os.homedir() + "/Dropbox/halberdier.aes";
+const ITEMS_FILE_PATH = os.homedir() + "/Dropbox/halberdier.dat";
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
