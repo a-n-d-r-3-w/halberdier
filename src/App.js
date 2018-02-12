@@ -87,7 +87,7 @@ class App extends React.Component {
             showPasswords: false,
         };
         this.onChange = this.onChange.bind(this);
-        this.openFile = this.openFile.bind(this);
+        this.loadFromFile = this.loadFromFile.bind(this);
         this.saveChanges = this.saveChanges.bind(this);
         this.addItem = this.addItem.bind(this);
         this.deleteItem = this.deleteItem.bind(this);
@@ -95,18 +95,18 @@ class App extends React.Component {
         this.onSavePasswordInputChange = this.onSavePasswordInputChange.bind(this);
         this.onSavePasswordInputChange2 = this.onSavePasswordInputChange2.bind(this);
         this.onFilterTextChange = this.onFilterTextChange.bind(this);
-        this.handleClickOpenLoadDialog = this.handleClickOpenLoadDialog.bind(this);
-        this.handleClickOpenSaveDialog = this.handleClickOpenSaveDialog.bind(this);
+        this.handleClickReloadButton = this.handleClickReloadButton.bind(this);
+        this.handleClickSaveButton = this.handleClickSaveButton.bind(this);
         this.handleCloseLoadDialog = this.handleCloseLoadDialog.bind(this);
         this.handleCloseSaveDialog = this.handleCloseSaveDialog.bind(this);
         this.toggleShowPasswords = this.toggleShowPasswords.bind(this);
     }
 
-    handleClickOpenLoadDialog() {
+    handleClickReloadButton() {
         if (this.state.masterPassword) {
             this.setState(prevState => ({
                 loadPassword: prevState.masterPassword
-            }), this.openFile);
+            }), this.loadFromFile);
             return;
         }
         this.setState({ isLoadDialogOpen: true });
@@ -116,7 +116,7 @@ class App extends React.Component {
         this.setState({ isLoadDialogOpen: false, loadPassword: '' });
     };
 
-    handleClickOpenSaveDialog() {
+    handleClickSaveButton() {
         if (this.state.masterPassword) {
             this.setState(prevState => ({
                 savePassword: prevState.masterPassword
@@ -189,7 +189,7 @@ class App extends React.Component {
         }
     }
 
-    openFile(event) {
+    loadFromFile(event) {
         if (event) { event.preventDefault(); }
         ipcRenderer.send('get-items', this.state.loadPassword);
         this.setState({ loadPassword: '' });
@@ -322,7 +322,7 @@ class App extends React.Component {
                             <Button
                                 autoFocus
                                 variant="raised"
-                                onClick={this.handleClickOpenLoadDialog}
+                                onClick={this.handleClickReloadButton}
                                 className={classes.button}
                                 disabled={!this.state.fileExists}
                             >
@@ -335,7 +335,7 @@ class App extends React.Component {
                                 aria-labelledby="load-dialog"
                             >
                                 <DialogTitle id="load-dialog">Load items from ~/Dropbox/halberdier.dat</DialogTitle>
-                                <form onSubmit={this.openFile}>
+                                <form onSubmit={this.loadFromFile}>
                                     <DialogContent>
                                             <TextField
                                                 autoFocus
@@ -364,7 +364,7 @@ class App extends React.Component {
                             </Dialog>
                             <Button
                                 variant="raised"
-                                onClick={this.handleClickOpenSaveDialog}
+                                onClick={this.handleClickSaveButton}
                                 className={classes.button}
                                 disabled={this.state.items.length === 0 || !this.state.isDirty}
                             >
