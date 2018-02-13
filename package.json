@@ -13,8 +13,10 @@
   },
   "keywords": [
     "local",
+    "offline",
     "password",
-    "manager"
+    "manager",
+    "mac"
   ],
   "author": "andr3w",
   "license": "MIT",
