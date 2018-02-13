@@ -1,6 +1,6 @@
 {
   "name": "halberdier",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A local (offline) password manager for Mac",
   "main": "main.js",
   "scripts": {
