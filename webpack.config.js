@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
@@ -25,5 +26,11 @@ module.exports = {
             }
         ]
     },
-    target: 'electron-renderer'
+    target: 'electron-renderer',
+    plugins: [
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify('production') // To use production build of React.
+        }),
+        new webpack.optimize.UglifyJsPlugin()
+    ]
 };
