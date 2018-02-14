@@ -19,6 +19,7 @@ import Dialog, {
 import VisibilityOnIcon from 'material-ui-icons/Visibility';
 import VisibilityOffIcon from 'material-ui-icons/VisibilityOff';
 import HListItem from './HListItem';
+import HReloadFromFileButton from './HReloadFromFileButton';
 
 import halberd from './halberd.png';
 
@@ -284,49 +285,17 @@ class App extends React.Component {
                             </Typography>
                         </Grid>
                         <Grid item>
-                            <Button
-                                autoFocus
-                                variant="raised"
-                                onClick={this.handleClickReloadButton}
-                                className={classes.button}
-                                disabled={!this.state.fileExists || !this.state.isDirty}
-                            >
-                                <RestoreIcon className={classes.leftIcon}/>
-                                Reload from file
-                            </Button>
-                            <Dialog
-                                open={this.state.isLoadDialogOpen}
-                                onClose={this.handleCloseLoadDialog}
-                                aria-labelledby="load-dialog"
-                            >
-                                <DialogTitle id="load-dialog">Load items from ~/Dropbox/halberdier.dat</DialogTitle>
-                                <form onSubmit={this.loadFromFile}>
-                                    <DialogContent>
-                                            <TextField
-                                                autoFocus
-                                                fullWidth
-                                                type="password"
-                                                label="Master password"
-                                                onChange={this.onLoadPasswordInputChange}
-                                                value={this.state.loadPassword}
-                                                error={this.state.isLoadError}
-                                            />
-                                    </DialogContent>
-                                    <DialogActions>
-                                        <Button
-                                            onClick={this.handleCloseLoadDialog}
-                                            color="primary">
-                                            Cancel
-                                        </Button>
-                                        <Button
-                                            disabled={!this.state.loadPassword}
-                                            type="submit"
-                                            color="primary">
-                                            Load
-                                        </Button>
-                                    </DialogActions>
-                                </form>
-                            </Dialog>
+                            <HReloadFromFileButton
+                                handleClickReloadButton={this.handleClickReloadButton}
+                                fileExists={this.state.fileExists}
+                                isDirty={this.state.isDirty}
+                                isLoadDialogOpen={this.state.isLoadDialogOpen}
+                                handleCloseLoadDialog={this.handleCloseLoadDialog}
+                                loadFromFile={this.loadFromFile}
+                                onLoadPasswordInputChange={this.onLoadPasswordInputChange}
+                                loadPassword={this.state.loadPassword}
+                                isLoadError={this.state.isLoadError}
+                            />
 
                             <Button
                                 variant="raised"
