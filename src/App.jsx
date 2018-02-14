@@ -68,7 +68,6 @@ class App extends React.Component {
     }
 
     constructor(props) {
-        // noinspection JSCheckFunctionSignatures
         super(props);
         this.state = {
             loadPassword: '',
