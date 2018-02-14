@@ -2,27 +2,23 @@ import React from 'react';
 import Reboot from 'material-ui/Reboot';
 import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
-import DeleteIcon from 'material-ui-icons/Delete';
 import SaveIcon from 'material-ui-icons/Save';
 import AddIcon from 'material-ui-icons/Add';
 import RestoreIcon from 'material-ui-icons/Restore';
 import SearchIcon from 'material-ui-icons/Search';
 import TextField from 'material-ui/TextField';
 import Grid from 'material-ui/Grid';
-import Input, {InputLabel, InputAdornment} from 'material-ui/Input';
-import CopyIcon from 'material-ui-icons/ContentCopy';
-import List, {ListItem} from 'material-ui/List';
+import Input, {InputAdornment} from 'material-ui/Input';
+import List from 'material-ui/List';
 import Typography from 'material-ui/Typography';
 import Dialog, {
     DialogActions,
     DialogContent,
     DialogTitle,
 } from 'material-ui/Dialog';
-import Tooltip from 'material-ui/Tooltip';
-import {FormControl} from 'material-ui/Form';
 import VisibilityOnIcon from 'material-ui-icons/Visibility';
 import VisibilityOffIcon from 'material-ui-icons/VisibilityOff';
+import HListItem from './HListItem';
 
 import halberd from './halberd.png';
 
@@ -91,6 +87,7 @@ class App extends React.Component {
         this.saveChanges = this.saveChanges.bind(this);
         this.addItem = this.addItem.bind(this);
         this.deleteItem = this.deleteItem.bind(this);
+        this.copyField = this.copyField.bind(this);
         this.onLoadPasswordInputChange = this.onLoadPasswordInputChange.bind(this);
         this.onSavePasswordInputChange = this.onSavePasswordInputChange.bind(this);
         this.onSavePasswordInputChange2 = this.onSavePasswordInputChange2.bind(this);
@@ -265,57 +262,14 @@ class App extends React.Component {
         const {classes} = this.props;
 
         const listItems = this.state.filteredItems.map(item => {
-            return (
-                <ListItem key={item.id} dense>
-                    <Tooltip title="Delete row">
-                        <IconButton onClick={this.deleteItem(item.id)}><DeleteIcon/></IconButton>
-                    </Tooltip>
-                    <FormControl className={classes.formControl}>
-                        <InputLabel>Name</InputLabel>
-                        <Input
-                            value={item.service}
-                            onChange={this.onChange(item.id, 'service')}/>
-                    </FormControl>
-                    <FormControl className={classes.formControl}>
-                        <InputLabel>Username</InputLabel>
-                        <Input
-                            endAdornment={
-                                <InputAdornment position="end" onClick={this.copyField(item.id, 'username')}>
-                                    <Tooltip title="Copy username">
-                                        <div><IconButton
-                                            className={classes.iconButton}
-                                            color="primary"
-                                            disabled={!this.state.items.find(password => password.id === item.id).username}>
-                                            <CopyIcon className={classes.icon}/>
-                                        </IconButton></div>
-                                    </Tooltip>
-                                </InputAdornment>
-                            }
-                            value={item.username}
-                            onChange={this.onChange(item.id, 'username')}/>
-                    </FormControl>
-                    <FormControl className={classes.formControl}>
-                        <InputLabel>Password</InputLabel>
-                        <Input
-                            type={this.state.showPasswords ? "text" : "password"}
-                            endAdornment={
-                                <InputAdornment position="end" onClick={this.copyField(item.id, 'password')}>
-                                    <Tooltip title="Copy password">
-                                        <div><IconButton
-                                            className={classes.iconButton}
-                                            color="primary"
-                                            disabled={!this.state.items.find(password => password.id === item.id).password}
-                                        >
-                                            <CopyIcon className={classes.icon}/>
-                                        </IconButton></div>
-                                    </Tooltip>
-                                </InputAdornment>
-                            }
-                            value={item.password}
-                            onChange={this.onChange(item.id, 'password')}/>
-                    </FormControl>
-                </ListItem>
-            );
+            return <HListItem
+                items={this.state.items}
+                showPassword={this.state.showPassword}
+                item={item}
+                deleteItem={this.deleteItem}
+                onChange={this.onChange}
+                copyField={this.copyField}
+            />
         });
 
         return (
