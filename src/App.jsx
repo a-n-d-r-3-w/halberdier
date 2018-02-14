@@ -20,6 +20,7 @@ import VisibilityOffIcon from 'material-ui-icons/VisibilityOff';
 import HListItem from './HListItem';
 import HReloadFromFileButton from './HReloadFromFileButton';
 import HSaveChangesButton from './HSaveChangesButton';
+import HSaveWithNewPasswordButton from './HSaveWithNewPasswordButton';
 
 import halberd from './halberd.png';
 
@@ -296,7 +297,6 @@ class App extends React.Component {
                                 loadPassword={this.state.loadPassword}
                                 isLoadError={this.state.isLoadError}
                             />
-
                             <HSaveChangesButton
                                 handleClickSaveButton={this.handleClickSaveButton}
                                 items={this.state.items}
@@ -310,60 +310,19 @@ class App extends React.Component {
                                 savePassword2={this.state.savePassword2}
                                 isSaveError={this.state.isSaveError}
                             />
-                            
-                            <Button
-                                variant="raised"
-                                onClick={this.handleClickUpdatePasswordButton}
-                                className={classes.button}
-                                disabled={this.state.items.length === 0 || !this.state.fileExists}
-                            >
-                                <SaveIcon className={classes.leftIcon}/>
-                                Save with new master password
-                            </Button>
-                            <Dialog
-                                open={this.state.isUpdatePasswordDialogOpen}
-                                onClose={this.handleCloseUpdatePasswordDialog}
-                                aria-labelledby="save-dialog"
-                            >
-                                <DialogTitle id="save-dialog">
-                                    Update password for ~/Dropbox/halberdier.dat.
-                                    <Typography color="primary">File will be overwritten.</Typography>
-                                </DialogTitle>
-                                <form onSubmit={this.saveChanges}>
-                                    <DialogContent>
-                                        <TextField
-                                            autoFocus
-                                            fullWidth
-                                            type="password"
-                                            label="Master password"
-                                            onChange={this.onSavePasswordInputChange}
-                                            value={this.state.savePassword}
-                                            error={this.state.isSaveError}
-                                        />
-                                        <TextField
-                                            fullWidth
-                                            type="password"
-                                            label="Confirm master password"
-                                            onChange={this.onSavePasswordInputChange2}
-                                            value={this.state.savePassword2}
-                                            error={this.state.isSaveError}
-                                        />
-                                    </DialogContent>
-                                    <DialogActions>
-                                        <Button
-                                            onClick={this.handleCloseUpdatePasswordDialog}
-                                            color="primary">
-                                            Cancel
-                                        </Button>
-                                        <Button
-                                            disabled={!this.state.savePassword || (this.state.savePassword !== this.state.savePassword2)}
-                                            type="submit"
-                                            color="primary">
-                                            Save
-                                        </Button>
-                                    </DialogActions>
-                                </form>
-                            </Dialog>
+                            <HSaveWithNewPasswordButton
+                                handleClickUpdatePasswordButton={this.handleClickUpdatePasswordButton}
+                                items={this.state.items}
+                                fileExists={this.state.fileExists}
+                                isUpdatePasswordDialogOpen={this.state.isUpdatePasswordDialogOpen}
+                                handleCloseUpdatePasswordDialog={this.handleCloseUpdatePasswordDialog}
+                                saveChanges={this.saveChanges}
+                                onSavePasswordInputChange={this.onSavePasswordInputChange}
+                                onSavePasswordInputChange2={this.onSavePasswordInputChange2}
+                                savePassword={this.state.savePassword}
+                                savePassword2={this.state.savePassword2}
+                                isSaveError={this.state.isSaveError}
+                            />
                         </Grid>
                         {
                             (this.state.items.length !== 0) && <Grid item >
