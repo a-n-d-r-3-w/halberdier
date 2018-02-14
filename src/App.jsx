@@ -4,7 +4,6 @@ import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
 import SaveIcon from 'material-ui-icons/Save';
 import AddIcon from 'material-ui-icons/Add';
-import RestoreIcon from 'material-ui-icons/Restore';
 import SearchIcon from 'material-ui-icons/Search';
 import TextField from 'material-ui/TextField';
 import Grid from 'material-ui/Grid';
@@ -20,6 +19,7 @@ import VisibilityOnIcon from 'material-ui-icons/Visibility';
 import VisibilityOffIcon from 'material-ui-icons/VisibilityOff';
 import HListItem from './HListItem';
 import HReloadFromFileButton from './HReloadFromFileButton';
+import HSaveChangesButton from './HSaveChangesButton';
 
 import halberd from './halberd.png';
 
@@ -297,59 +297,19 @@ class App extends React.Component {
                                 isLoadError={this.state.isLoadError}
                             />
 
-                            <Button
-                                variant="raised"
-                                onClick={this.handleClickSaveButton}
-                                className={classes.button}
-                                disabled={this.state.items.length === 0 || !this.state.isDirty}
-                            >
-                                <SaveIcon className={classes.leftIcon}/>
-                                Save changes
-                            </Button>
-                            <Dialog
-                                open={this.state.isSaveDialogOpen}
-                                onClose={this.handleCloseSaveDialog}
-                                aria-labelledby="save-dialog"
-                            >
-                                <DialogTitle id="save-dialog">
-                                    Save items to ~/Dropbox/halberdier.dat.
-                                    <Typography color="primary">File will be overwritten if it exists.</Typography>
-                                </DialogTitle>
-                                <form onSubmit={this.saveChanges}>
-                                    <DialogContent>
-                                        <TextField
-                                            autoFocus
-                                            fullWidth
-                                            type="password"
-                                            label="Master password"
-                                            onChange={this.onSavePasswordInputChange}
-                                            value={this.state.savePassword}
-                                            error={this.state.isSaveError}
-                                        />
-                                        <TextField
-                                            fullWidth
-                                            type="password"
-                                            label="Confirm master password"
-                                            onChange={this.onSavePasswordInputChange2}
-                                            value={this.state.savePassword2}
-                                            error={this.state.isSaveError}
-                                        />
-                                    </DialogContent>
-                                    <DialogActions>
-                                        <Button
-                                            onClick={this.handleCloseSaveDialog}
-                                            color="primary">
-                                            Cancel
-                                        </Button>
-                                        <Button
-                                            disabled={!this.state.savePassword || (this.state.savePassword !== this.state.savePassword2)}
-                                            type="submit"
-                                            color="primary">
-                                            Save
-                                        </Button>
-                                    </DialogActions>
-                                </form>
-                            </Dialog>
+                            <HSaveChangesButton
+                                handleClickSaveButton={this.handleClickSaveButton}
+                                items={this.state.items}
+                                isDirty={this.state.isDirty}
+                                isSaveDialogOpen={this.state.isSaveDialogOpen}
+                                handleCloseSaveDialog={this.handleCloseSaveDialog}
+                                saveChanges={this.saveChanges}
+                                onSavePasswordInputChange={this.onSavePasswordInputChange}
+                                onSavePasswordInputChange2={this.onSavePasswordInputChange2}
+                                savePassword={this.state.savePassword}
+                                savePassword2={this.state.savePassword2}
+                                isSaveError={this.state.isSaveError}
+                            />
                             
                             <Button
                                 variant="raised"
