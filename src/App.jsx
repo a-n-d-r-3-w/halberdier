@@ -2,25 +2,17 @@ import React from 'react';
 import Reboot from 'material-ui/Reboot';
 import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
-import SaveIcon from 'material-ui-icons/Save';
 import AddIcon from 'material-ui-icons/Add';
-import SearchIcon from 'material-ui-icons/Search';
-import TextField from 'material-ui/TextField';
 import Grid from 'material-ui/Grid';
-import Input, {InputAdornment} from 'material-ui/Input';
 import List from 'material-ui/List';
 import Typography from 'material-ui/Typography';
-import Dialog, {
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-} from 'material-ui/Dialog';
 import VisibilityOnIcon from 'material-ui-icons/Visibility';
 import VisibilityOffIcon from 'material-ui-icons/VisibilityOff';
 import HListItem from './HListItem';
 import HReloadFromFileButton from './HReloadFromFileButton';
 import HSaveChangesButton from './HSaveChangesButton';
 import HSaveWithNewPasswordButton from './HSaveWithNewPasswordButton';
+import HFilterInput from './HFilterInput';
 
 import halberd from './halberd.png';
 
@@ -326,16 +318,10 @@ class App extends React.Component {
                         </Grid>
                         {
                             (this.state.items.length !== 0) && <Grid item >
-                                <Input
-                                    placeholder="Filter"
-                                    type="search"
-                                    startAdornment={
-                                        <InputAdornment position="start">
-                                            <SearchIcon className={classes.iconButton} />
-                                        </InputAdornment>
-                                    }
-                                    value={this.state.filterText}
-                                    onChange={this.onFilterTextChange}/>
+                                <HFilterInput
+                                    filterText={this.state.filterText}
+                                    onFilterTextChange={this.onFilterTextChange}
+                                />
                             </Grid>
                         }
                         <Grid item>
