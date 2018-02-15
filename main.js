@@ -1,19 +1,48 @@
+const crypto = require('crypto');
 const electron = require('electron');
-const {ipcMain} = require('electron');
-// Module to control application life.
-const app = electron.app;
-// Module to create native browser window.
-const BrowserWindow = electron.BrowserWindow;
-
+const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const url = require('url');
 
-const fs = require('fs');
-const crypto = require('crypto');
-
-const os = require('os');
+const {app, ipcMain, Menu} = electron;
+const BrowserWindow = electron.BrowserWindow;
 
 const ITEMS_FILE_PATH = os.homedir() + "/Dropbox/halberdier.dat";
+
+const menuTemplate = [
+    {
+        label: 'Edit',
+        submenu: [
+            {role: 'undo'},
+            {role: 'redo'},
+            {type: 'separator'},
+            {role: 'cut'},
+            {role: 'copy'},
+            {role: 'paste'},
+            {role: 'pasteandmatchstyle'},
+            {role: 'delete'},
+            {role: 'selectall'}
+        ]
+    }
+];
+
+if (process.platform === 'darwin') {
+    menuTemplate.unshift({
+        label: 'Halberdier',
+        submenu: [
+            {role: 'about'},
+            {type: 'separator'},
+            {role: 'services', submenu: []},
+            {type: 'separator'},
+            {role: 'hide'},
+            {role: 'hideothers'},
+            {role: 'unhide'},
+            {type: 'separator'},
+            {role: 'quit'}
+        ]
+    })
+}
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -43,6 +72,9 @@ function createWindow() {
         protocol: 'file:',
         slashes: true
     }));
+
+    const menu = Menu.buildFromTemplate(menuTemplate);
+    Menu.setApplicationMenu(menu);
 
     // Open the DevTools.
     // mainWindow.webContents.openDevTools();
