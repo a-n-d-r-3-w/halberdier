@@ -25,7 +25,7 @@ const HSaveWithNewPasswordButton = (props) => {
     const {classes} = props;
 
     return (
-        <div>
+        <span>
             <Button
                 variant="raised"
                 onClick={props.handleClickUpdatePasswordButton}
@@ -79,7 +79,7 @@ const HSaveWithNewPasswordButton = (props) => {
                     </DialogActions>
                 </form>
             </Dialog>
-        </div>
+        </span>
     );
 };
 

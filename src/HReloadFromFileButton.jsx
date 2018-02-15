@@ -24,7 +24,7 @@ const HReloadFromFileButton = (props) => {
     const {classes} = props;
 
     return (
-        <div>
+        <span>
             <Button
                 autoFocus
                 variant="raised"
@@ -68,7 +68,7 @@ const HReloadFromFileButton = (props) => {
                     </DialogActions>
                 </form>
             </Dialog>
-        </div>
+        </span>
     )
 };
 

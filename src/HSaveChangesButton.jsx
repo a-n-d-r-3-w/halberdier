@@ -25,7 +25,7 @@ const HSaveChangeButton = (props) => {
     const {classes} = props;
 
     return (
-        <div>
+        <span>
             <Button
                 variant="raised"
                 onClick={props.handleClickSaveButton}
@@ -79,7 +79,7 @@ const HSaveChangeButton = (props) => {
                     </DialogActions>
                 </form>
             </Dialog>
-        </div>
+        </span>
     )
 };
 
