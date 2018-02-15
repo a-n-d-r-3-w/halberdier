@@ -16,9 +16,7 @@
     * Username: andr3w
     * Password my_s00per_str0ng_passw0rd
 * Add as many items as you want
-* Click **Save** to open the save dialog
+* Click **Save changes** to open the save dialog
 * Enter a master password twice and click **Save**
-  * This saves your passwords in an encrypted file in your home directory named `halberdier.aes`
 * To quit Halberdier, press Command+q
-* The next time you launch **halberdier**, it will immediately prompt you to enter your master password in order to 
-  load your passwords
+* The next time you launch Halberdier, it will immediately prompt you to enter your master password in order to load your passwords
