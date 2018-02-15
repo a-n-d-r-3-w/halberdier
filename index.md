@@ -1,12 +1,11 @@
 ![Screenshot](https://raw.githubusercontent.com/a-n-d-r-3-w/halberdier/master/screenshot.png)
 
-**Halberdier** stores your passwords in an encrypted file located in your home
-directory at `~/halberdier.aes`.
+**Halberdier** stores your passwords in an encrypted file located at `~/Dropbox/halberdier.aes`.
 
 # Installation
-* Download the [installer](https://github.com/a-n-d-r-3-w/halberdier/releases/download/v1.0.0/Halberdier-1.0.0.dmg)
-* Double-click the DMG file to launch the installer
-* In the installer window, drag **Halberdier.app** to **Applications**
+* Download the [ZIP file](https://github.com/a-n-d-r-3-w/halberdier/releases/download/v1.0.1/Halberdier-v1.0.1.zip)
+* Double-click the ZIP file to unzip it
+* Drag `Halberdier.app` to `/Applications`
 
 # Getting started
 * Launch Halberdier by selecting **Launchpad > Halberdier**
