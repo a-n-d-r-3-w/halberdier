@@ -1,6 +1,6 @@
 ![Screenshot](https://raw.githubusercontent.com/a-n-d-r-3-w/halberdier/master/screenshot.png)
 
-**Halberdier** stores your passwords in an encrypted file located at `~/Dropbox/halberdier.aes`.
+**Halberdier** stores your passwords in an encrypted file located at `~/Dropbox/halberdier.dat`.
 
 # Installation
 * Download the [ZIP file](https://github.com/a-n-d-r-3-w/halberdier/releases/download/v1.0.1/Halberdier-v1.0.1.zip)
