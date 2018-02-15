@@ -258,7 +258,7 @@ class App extends React.Component {
         const listItems = this.state.filteredItems.map(item => {
             return <HListItem
                 items={this.state.items}
-                showPassword={this.state.showPassword}
+                showPasswords={this.state.showPasswords}
                 item={item}
                 deleteItem={this.deleteItem}
                 onChange={this.onChange}
