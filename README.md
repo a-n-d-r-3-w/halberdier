@@ -11,8 +11,8 @@ If you don't have Yarn, then just replace `yarn` with `npm` in the following ins
 1. `git clone https://github.com/a-n-d-r-3-w/halberdier.git`
 1. `cd halberdier`
 1. `yarn install`
-1. Run webpack in watch mode: `yarn run build`
+1. Run webpack in watch mode: `yarn build`
 1. In another terminal, launch app: `yarn start`
 
 # Create an APP file for distribution
-`yarn run package`
+`yarn package`
