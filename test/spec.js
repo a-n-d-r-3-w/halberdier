@@ -37,16 +37,13 @@ describe('Application launch', function () {
     }
   });
 
-  it('shows an initial window and assert title', function () {
+  it('shows an initial window and assert title', async function () {
     const {client} = this.app;
-    return client.getTitle().then(function (title) {
-      assert.equal(title, 'Halberdier');
-    }).then(function () {
-      client.getWindowCount().then(function (count) {
-        assert.equal(count, 1)
-        // Please note that getWindowCount() will return 2 if `dev tools` are opened.
-        // assert.equal(count, 2)
-      })
-    });
-  })
+    const title = await client.getTitle();
+    assert.equal(title, 'Halberdier');
+    const count = await client.getWindowCount();
+    assert.equal(count, 1);
+    // Please note that getWindowCount() will return 2 if `dev tools` are opened.
+    // assert.equal(count, 2)
+  });
 });
