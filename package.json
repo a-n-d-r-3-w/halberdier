@@ -19,7 +19,7 @@
     "manager",
     "mac"
   ],
-  "author": "andr3w",
+  "author": "Andrew Liu",
   "license": "MIT",
   "devDependencies": {
     "ajv": "^6.1.1",
@@ -29,7 +29,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
-    "electron": "^1.7.12",
+    "electron": "^16.0.5",
     "electron-packager": "^11.0.1",
     "file-loader": "^1.1.6",
     "uglifyjs-webpack-plugin": "^1.1.8",
