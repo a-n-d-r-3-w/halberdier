@@ -10,7 +10,7 @@
   "scripts": {
     "start": "electron .",
     "build": "webpack --watch",
-    "package": "electron-packager . Halberdier --icon icons/halberdier.icns --electron-version 1.8.2"
+    "package": "electron-packager . Halberdier --icon icons/halberdier.icns --electron-version 1.8.6"
   },
   "repository": {
     "type": "git",
@@ -33,7 +33,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
-    "electron": "^1.8.2",
+    "electron": "^1.8.6",
     "electron-packager": "^11.0.1",
     "file-loader": "^1.1.6",
     "uglifyjs-webpack-plugin": "^1.1.8",
