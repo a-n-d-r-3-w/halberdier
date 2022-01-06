@@ -40,7 +40,7 @@ const HReloadFromFileButton = (props) => {
                 onClose={props.handleCloseLoadDialog}
                 aria-labelledby="load-dialog"
             >
-                <DialogTitle id="load-dialog">Load items from ~/Dropbox/halberdier.dat</DialogTitle>
+                <DialogTitle id="load-dialog">Load items from ~/.halberdier/halberdier.dat</DialogTitle>
                 <form onSubmit={props.loadFromFile}>
                     <DialogContent>
                         <TextField

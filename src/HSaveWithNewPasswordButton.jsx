@@ -41,7 +41,7 @@ const HSaveWithNewPasswordButton = (props) => {
                 aria-labelledby="save-dialog"
             >
                 <DialogTitle id="save-dialog">
-                    Update password for ~/Dropbox/halberdier.dat.
+                    Update password for ~/.halberdier/halberdier.dat.
                     <Typography color="primary">File will be overwritten.</Typography>
                 </DialogTitle>
                 <form onSubmit={props.saveChanges}>
