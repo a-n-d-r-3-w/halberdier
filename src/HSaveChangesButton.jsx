@@ -41,7 +41,7 @@ const HSaveChangeButton = (props) => {
                 aria-labelledby="save-dialog"
             >
                 <DialogTitle id="save-dialog">
-                    Save items to ~/Dropbox/halberdier.dat.
+                    Save items to ~/.halberdier/halberdier.dat.
                     <Typography color="primary">File will be overwritten if it exists.</Typography>
                 </DialogTitle>
                 <form onSubmit={props.saveChanges}>

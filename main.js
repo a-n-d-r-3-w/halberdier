@@ -4,11 +4,15 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const url = require('url');
+const buffer = require('buffer');
 
 const {app, ipcMain, Menu} = electron;
 const BrowserWindow = electron.BrowserWindow;
 
-const ITEMS_FILE_PATH = os.homedir() + "/Dropbox/halberdier.dat";
+const ITEMS_DIRECTORY_PATH = os.homedir() + "/.halberdier";
+const ITEMS_FILE_PATH = ITEMS_DIRECTORY_PATH + "/halberdier.dat";
+const SALT = 'salt';
+const INITIALIZATION_VECTOR = buffer.Buffer.alloc(16);
 
 const menuTemplate = [
     {
@@ -49,14 +53,16 @@ if (process.platform === 'darwin') {
 let mainWindow;
 
 function encrypt(string, savePassword) {
-    const cipher = crypto.createCipher('aes192', savePassword);
+    const key = crypto.scryptSync(savePassword, SALT, 32);
+    const cipher = crypto.createCipheriv('aes-256-cbc', key, INITIALIZATION_VECTOR);
     let encrypted = cipher.update(string, 'utf8', 'hex');
     encrypted += cipher.final('hex');
     return encrypted;
 }
 
 function decrypt(string, loadPassword) {
-    const decipher = crypto.createDecipher('aes192', loadPassword);
+    const key = crypto.scryptSync(loadPassword, SALT, 32);
+    const decipher = crypto.createDecipheriv('aes-256-cbc', key, INITIALIZATION_VECTOR);
     let decrypted = decipher.update(string, 'hex', 'utf8');
     decrypted += decipher.final('utf8');
     return decrypted;
@@ -64,7 +70,14 @@ function decrypt(string, loadPassword) {
 
 function createWindow() {
     // Create the browser window.
-    mainWindow = new BrowserWindow({width: 960, height: 700});
+    mainWindow = new BrowserWindow({
+        width: 960,
+        height: 700,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false,
+        }
+    });
 
     // and load the index.html of the app.
     mainWindow.loadURL(url.format({
@@ -77,7 +90,7 @@ function createWindow() {
     Menu.setApplicationMenu(menu);
 
     // Open the DevTools.
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 
     ipcMain.on('get-items', (event, loadPassword) => {
         try {
@@ -97,6 +110,9 @@ function createWindow() {
         try {
             const string = JSON.stringify(state);
             const encrypted = encrypt(string, savePassword);
+            if (!fs.existsSync(ITEMS_DIRECTORY_PATH)) {
+                fs.mkdirSync(ITEMS_DIRECTORY_PATH);
+            }
             fs.writeFileSync(ITEMS_FILE_PATH, encrypted);
             event.sender.send('save-success');
         } catch (error) {
