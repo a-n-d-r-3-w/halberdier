@@ -70,7 +70,14 @@ function decrypt(string, loadPassword) {
 
 function createWindow() {
     // Create the browser window.
-    mainWindow = new BrowserWindow({width: 960, height: 700});
+    mainWindow = new BrowserWindow({
+        width: 960,
+        height: 700,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false,
+        }
+    });
 
     // and load the index.html of the app.
     mainWindow.loadURL(url.format({
@@ -83,7 +90,7 @@ function createWindow() {
     Menu.setApplicationMenu(menu);
 
     // Open the DevTools.
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 
     ipcMain.on('get-items', (event, loadPassword) => {
         try {
