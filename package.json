@@ -3,8 +3,8 @@
   "version": "1.0.3",
   "description": "A local (offline) password manager for Mac",
   "engines": {
-    "node": "^12.22.8",
-    "npm": "^6.14.15"
+    "node": "^16.13.1",
+    "npm": "^8.1.2"
   },
   "main": "main.js",
   "scripts": {
