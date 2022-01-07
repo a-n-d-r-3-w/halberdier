@@ -36,9 +36,8 @@
     "electron": "16.0.6",
     "electron-packager": "^15.4.0",
     "file-loader": "^1.1.6",
-    "uglifyjs-webpack-plugin": "^1.1.8",
-    "webpack": "^3.11.0",
-    "webpack-dev-server": "^2.11.1"
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1"
   },
   "dependencies": {
     "material-ui": "^1.0.0-beta.33",

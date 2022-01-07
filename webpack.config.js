@@ -2,10 +2,11 @@ const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
+    mode: 'production',
     entry: './src/renderer.js',
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist')
+        publicPath: '' // Recommended by https://webpack.js.org/migrate/5/ to resolve runtime error.
     },
     devtool: 'eval-source-map',
     resolve: {
@@ -26,7 +27,8 @@ module.exports = {
                             name: '[path][name].[ext]'
                         }
                     }
-                ]
+                ],
+                type: 'javascript/auto' // Stop Webpack's Asset Module from processing assets again as that would result in asset duplication. See https://webpack.js.org/guides/asset-modules/.
             }
         ]
     },
@@ -34,7 +36,6 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production') // To use production build of React.
-        }),
-        new webpack.optimize.UglifyJsPlugin()
+        })
     ]
 };
