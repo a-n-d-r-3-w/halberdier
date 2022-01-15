@@ -101,8 +101,9 @@ const HListItem = (props) => {
 };
 
 HListItem.propTypes = {
+  classes: PropTypes.object,
   items: PropTypes.array.isRequired,
-  showPassword: PropTypes.bool.isRequired,
+  showPasswords: PropTypes.bool.isRequired,
   item: PropTypes.shape({
     id: PropTypes.string.isRequired,
     service: PropTypes.string.isRequired,

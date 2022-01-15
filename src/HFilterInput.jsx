@@ -29,6 +29,7 @@ const HFilterInput = (props) => {
 };
 
 HFilterInput.propTypes = {
+  classes: PropTypes.object,
   filterText: PropTypes.string.isRequired,
   onFilterTextChange: PropTypes.func.isRequired,
 };

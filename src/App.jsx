@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Reboot from "material-ui/Reboot";
 import Paper from "material-ui/Paper";
 import Button from "material-ui/Button";
@@ -19,6 +20,8 @@ import halberd from "./halberd.png";
 import { clipboard } from "electron";
 
 import { withStyles } from "material-ui/styles";
+
+import electron from "electron";
 
 const APP_NAME = "Halberdier";
 
@@ -48,7 +51,7 @@ const styles = (theme) => ({
   },
 });
 
-const { ipcRenderer } = require("electron");
+const { ipcRenderer } = electron;
 
 class App extends React.Component {
   static filter(items, filterText) {
@@ -148,7 +151,7 @@ class App extends React.Component {
     });
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     ipcRenderer.on("load-success", (event, loadedData) => {
       this.setState(
         (prevState) => ({
@@ -302,9 +305,10 @@ class App extends React.Component {
   render() {
     const { classes } = this.props;
 
-    const listItems = this.state.filteredItems.map((item) => {
+    const listItems = this.state.filteredItems.map((item, index) => {
       return (
         <HListItem
+          key={index}
           items={this.state.items}
           showPasswords={this.state.showPasswords}
           item={item}
@@ -410,5 +414,9 @@ class App extends React.Component {
     );
   }
 }
+
+App.propTypes = {
+  classes: PropTypes.object,
+};
 
 export default withStyles(styles)(App);

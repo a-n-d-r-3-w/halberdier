@@ -88,6 +88,7 @@ const HSaveChangeButton = (props) => {
 };
 
 HSaveChangeButton.propTypes = {
+  classes: PropTypes.object,
   handleClickSaveButton: PropTypes.func.isRequired,
   items: PropTypes.array.isRequired,
   isDirty: PropTypes.bool.isRequired,

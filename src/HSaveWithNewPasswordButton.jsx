@@ -89,6 +89,7 @@ const HSaveWithNewPasswordButton = (props) => {
 };
 
 HSaveWithNewPasswordButton.propTypes = {
+  classes: PropTypes.object,
   handleClickUpdatePasswordButton: PropTypes.func.isRequired,
   items: PropTypes.array.isRequired,
   fileExists: PropTypes.bool.isRequired,

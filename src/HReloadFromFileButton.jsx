@@ -74,6 +74,7 @@ const HReloadFromFileButton = (props) => {
 };
 
 HReloadFromFileButton.propTypes = {
+  classes: PropTypes.object,
   handleClickReloadButton: PropTypes.func.isRequired,
   fileExists: PropTypes.bool.isRequired,
   isDirty: PropTypes.bool.isRequired,
