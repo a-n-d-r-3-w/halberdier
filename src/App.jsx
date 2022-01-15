@@ -141,7 +141,7 @@ class App extends React.Component {
                 isDirty: false,
                 masterPassword: loadedData.masterPassword,
             }), () => {
-                new Notification(APP_NAME, {body: `Items loaded.`});
+                new Notification(APP_NAME, {body: `Items loaded.`, silent: true});
             });
         });
 
@@ -155,7 +155,7 @@ class App extends React.Component {
                 isDirty: false,
                 fileExists: ipcRenderer.sendSync('get-file-exists')
             }, () => {
-                new Notification(APP_NAME, { body: `Items saved.` });
+                new Notification(APP_NAME, { body: `Items saved.`, silent: true });
             });
         });
 
@@ -241,7 +241,7 @@ class App extends React.Component {
     copyField(id, fieldName) {
         return () => {
             clipboard.writeText(this.state.items.find(password => password.id === id)[fieldName]);
-            new Notification(APP_NAME, {body: `Copied ${fieldName}. Clipboard will be cleared in 20 seconds.`});
+            new Notification(APP_NAME, {body: `Copied ${fieldName}. Clipboard will be cleared in 20 seconds.`, silent:true});
             setTimeout(() => { clipboard.clear(); }, 20000);
         }
     }
