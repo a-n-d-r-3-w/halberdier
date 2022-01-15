@@ -1,27 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SearchIcon from "material-ui-icons/Search";
-import Input, { InputAdornment } from "material-ui/Input";
-import { withStyles } from "material-ui/styles";
-
-const styles = (theme) => ({
-  iconButton: {
-    height: theme.typography.fontSize * 2,
-  },
-});
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
+import SearchIcon from "@mui/icons-material/Search";
 
 const HFilterInput = (props) => {
-  const { classes } = props;
-
   return (
-    <Input
+    <TextField
       placeholder="Filter"
       type="search"
-      startAdornment={
-        <InputAdornment position="start">
-          <SearchIcon className={classes.iconButton} />
-        </InputAdornment>
-      }
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <SearchIcon />
+          </InputAdornment>
+        ),
+      }}
       value={props.filterText}
       onChange={props.onFilterTextChange}
     />
@@ -29,9 +23,8 @@ const HFilterInput = (props) => {
 };
 
 HFilterInput.propTypes = {
-  classes: PropTypes.object,
   filterText: PropTypes.string.isRequired,
   onFilterTextChange: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(HFilterInput);
+export default HFilterInput;
