@@ -385,7 +385,7 @@ class App extends React.Component {
             )}
             <Grid item>
               <Button
-                variant="raised"
+                variant="contained"
                 onClick={this.addItem}
                 className={classes.button}
               >
@@ -393,7 +393,7 @@ class App extends React.Component {
                 Add row
               </Button>
               <Button
-                variant="raised"
+                variant="contained"
                 onClick={this.toggleShowPasswords}
                 className={classes.button}
               >

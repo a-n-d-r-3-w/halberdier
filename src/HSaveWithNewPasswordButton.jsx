@@ -27,7 +27,7 @@ const HSaveWithNewPasswordButton = (props) => {
   return (
     <span>
       <Button
-        variant="raised"
+        variant="contained"
         onClick={props.handleClickUpdatePasswordButton}
         className={classes.button}
         disabled={props.items.length === 0 || !props.fileExists}

@@ -27,7 +27,7 @@ const HSaveChangeButton = (props) => {
   return (
     <span>
       <Button
-        variant="raised"
+        variant="contained"
         onClick={props.handleClickSaveButton}
         className={classes.button}
         disabled={props.items.length === 0 || !props.isDirty}

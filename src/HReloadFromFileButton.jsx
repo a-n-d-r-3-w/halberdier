@@ -1,38 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Button from "material-ui/Button";
-import RestoreIcon from "material-ui-icons/Restore";
-import TextField from "material-ui/TextField";
-import Dialog, {
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from "material-ui/Dialog";
+import Button from "@mui/material/Button";
+import RestoreIcon from "@mui/icons-material/Restore";
+import TextField from "@mui/material/TextField";
 
-import { withStyles } from "material-ui/styles";
-
-const styles = (theme) => ({
-  button: {
-    margin: theme.spacing.unit,
-  },
-  leftIcon: {
-    marginRight: theme.spacing.unit,
-  },
-});
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const HReloadFromFileButton = (props) => {
-  const { classes } = props;
-
   return (
     <span>
       <Button
         autoFocus
-        variant="raised"
+        variant="contained"
         onClick={props.handleClickReloadButton}
-        className={classes.button}
         disabled={!props.fileExists || !props.isDirty}
       >
-        <RestoreIcon className={classes.leftIcon} />
+        <RestoreIcon />
         Reload from file
       </Button>
       <Dialog
@@ -74,7 +60,6 @@ const HReloadFromFileButton = (props) => {
 };
 
 HReloadFromFileButton.propTypes = {
-  classes: PropTypes.object,
   handleClickReloadButton: PropTypes.func.isRequired,
   fileExists: PropTypes.bool.isRequired,
   isDirty: PropTypes.bool.isRequired,
@@ -86,4 +71,4 @@ HReloadFromFileButton.propTypes = {
   isLoadError: PropTypes.bool.isRequired,
 };
 
-export default withStyles(styles)(HReloadFromFileButton);
+export default HReloadFromFileButton;
