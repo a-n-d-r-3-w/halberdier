@@ -1,38 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Button from "material-ui/Button";
-import SaveIcon from "material-ui-icons/Save";
-import TextField from "material-ui/TextField";
-import Typography from "material-ui/Typography";
-import Dialog, {
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from "material-ui/Dialog";
-
-import { withStyles } from "material-ui/styles";
-
-const styles = (theme) => ({
-  button: {
-    margin: theme.spacing.unit,
-  },
-  leftIcon: {
-    marginRight: theme.spacing.unit,
-  },
-});
+import Button from "@mui/material/Button";
+import SaveIcon from "@mui/icons-material/Save";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const HSaveChangeButton = (props) => {
-  const { classes } = props;
-
   return (
     <span>
       <Button
         variant="contained"
         onClick={props.handleClickSaveButton}
-        className={classes.button}
         disabled={props.items.length === 0 || !props.isDirty}
       >
-        <SaveIcon className={classes.leftIcon} />
+        <SaveIcon />
         Save changes
       </Button>
       <Dialog
@@ -88,7 +73,6 @@ const HSaveChangeButton = (props) => {
 };
 
 HSaveChangeButton.propTypes = {
-  classes: PropTypes.object,
   handleClickSaveButton: PropTypes.func.isRequired,
   items: PropTypes.array.isRequired,
   isDirty: PropTypes.bool.isRequired,
@@ -102,4 +86,4 @@ HSaveChangeButton.propTypes = {
   isSaveError: PropTypes.bool.isRequired,
 };
 
-export default withStyles(styles)(HSaveChangeButton);
+export default HSaveChangeButton;
