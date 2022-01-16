@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import CssBaseline from "@mui/material/CssBaseline";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
@@ -286,6 +287,7 @@ class App extends React.Component {
 
     return (
       <div>
+        <CssBaseline />
         <Paper>
           <Grid direction="column" container alignItems="center" spacing={40}>
             <Grid item>
