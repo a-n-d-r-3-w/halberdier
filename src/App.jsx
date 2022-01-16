@@ -1,55 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Reboot from "material-ui/Reboot";
-import Paper from "material-ui/Paper";
-import Button from "material-ui/Button";
-import AddIcon from "material-ui-icons/Add";
-import Grid from "material-ui/Grid";
-import List from "material-ui/List";
-import Typography from "material-ui/Typography";
-import VisibilityOnIcon from "material-ui-icons/Visibility";
-import VisibilityOffIcon from "material-ui-icons/VisibilityOff";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
+import Grid from "@mui/material/Grid";
+import List from "@mui/material/List";
+import Typography from "@mui/material/Typography";
+import VisibilityOnIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import HListItem from "./HListItem";
 import HReloadFromFileButton from "./HReloadFromFileButton";
 import HSaveChangesButton from "./HSaveChangesButton";
 import HSaveWithNewPasswordButton from "./HSaveWithNewPasswordButton";
 import HFilterInput from "./HFilterInput";
-
+import electron, { clipboard } from "electron";
 import halberd from "./halberd.png";
 
-import { clipboard } from "electron";
-
-import { withStyles } from "material-ui/styles";
-
-import electron from "electron";
-
 const APP_NAME = "Halberdier";
-
-const styles = (theme) => ({
-  root: theme.mixins.gutters({
-    marginTop: theme.spacing.unit * 3,
-    marginLeft: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit * 3,
-    paddingTop: theme.spacing.unit * 6,
-    paddingBottom: theme.spacing.unit * 6,
-  }),
-  button: {
-    margin: theme.spacing.unit,
-  },
-  leftIcon: {
-    marginRight: theme.spacing.unit,
-  },
-  formControl: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-  },
-  iconButton: {
-    height: theme.typography.fontSize * 2,
-  },
-  icon: {
-    fontSize: theme.typography.fontSize * 1.5,
-  },
-});
 
 const { ipcRenderer } = electron;
 
@@ -303,8 +270,6 @@ class App extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
-
     const listItems = this.state.filteredItems.map((item, index) => {
       return (
         <HListItem
@@ -321,11 +286,10 @@ class App extends React.Component {
 
     return (
       <div>
-        <Reboot />
-        <Paper className={classes.root}>
+        <Paper>
           <Grid direction="column" container alignItems="center" spacing={40}>
             <Grid item>
-              <Typography variant="display2" align="center">
+              <Typography variant="h3" align="center">
                 <img src={halberd} style={{ marginRight: "4px" }} />
                 Halberdier
               </Typography>
@@ -384,23 +348,15 @@ class App extends React.Component {
               </Grid>
             )}
             <Grid item>
-              <Button
-                variant="contained"
-                onClick={this.addItem}
-                className={classes.button}
-              >
-                <AddIcon className={classes.leftIcon} />
+              <Button variant="contained" onClick={this.addItem}>
+                <AddIcon />
                 Add row
               </Button>
-              <Button
-                variant="contained"
-                onClick={this.toggleShowPasswords}
-                className={classes.button}
-              >
+              <Button variant="contained" onClick={this.toggleShowPasswords}>
                 {this.state.showPasswords ? (
-                  <VisibilityOffIcon className={classes.leftIcon} />
+                  <VisibilityOffIcon />
                 ) : (
-                  <VisibilityOnIcon className={classes.leftIcon} />
+                  <VisibilityOnIcon />
                 )}
                 {this.state.showPasswords ? "Hide passwords" : "Show passwords"}
               </Button>
@@ -419,4 +375,4 @@ App.propTypes = {
   classes: PropTypes.object,
 };
 
-export default withStyles(styles)(App);
+export default App;
