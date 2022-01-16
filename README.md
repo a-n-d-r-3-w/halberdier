@@ -3,7 +3,7 @@
 A local (offline) password manager for Mac based on [Electron](https://electronjs.org/) (via
 [electron-quick-start](https://github.com/electron/electron-quick-start)),
 [Node.js crypto](https://nodejs.org/api/crypto.html), [React](https://reactjs.org/), and
-[Material UI](https://material-ui-next.com/). Passwords are encrypted using AES-192.
+[Material UI](https://mui.com/). Passwords are encrypted using AES-192.
 
 ![Screenshot](screenshot.png)
 
