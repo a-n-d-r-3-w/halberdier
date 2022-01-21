@@ -10,7 +10,7 @@
   "scripts": {
     "start": "electron .",
     "build": "rm -rf dist && webpack watch",
-    "package": "rm -rf Halberdier-darwin-x64 && electron-packager . Halberdier2022 --icon icons/halberdier.icns --electron-version 16.0.6 && open Halberdier2022-darwin-x64",
+    "package": "rm -rf Halberdier2022-darwin-x64 && electron-packager . Halberdier2022 --icon icons/halberdier.icns --electron-version 16.0.6 --osx-sign",
     "create-installer": "electron-installer-dmg --out=Halberdier2022-darwin-x64 Halberdier2022-darwin-x64/Halberdier2022.app Halberdier2022 && open Halberdier2022-darwin-x64"
   },
   "repository": {
