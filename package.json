@@ -12,7 +12,7 @@
     "build": "rm -rf dist && webpack watch",
     "package": "rm -rf Halberdier2022-darwin-x64 && electron-packager . Halberdier2022 --icon icons/halberdier.icns --electron-version 16.0.6 --osx-sign --app-bundle-id=\"com.a-n-d-r-3-w.halberdier\"",
     "create-installer": "electron-osx-flat Halberdier2022-darwin-x64/Halberdier2022.app",
-    "deploy": "rm -rf dist && webpack && npm run package && npm run create-installer  && open Halberdier2022-darwin-x64"
+    "deploy": "rm -rf dist && webpack && npm run package && npm run create-installer && open Halberdier2022-darwin-x64"
   },
   "repository": {
     "type": "git",
